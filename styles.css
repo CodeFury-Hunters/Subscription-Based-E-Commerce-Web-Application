@@ -53,8 +53,10 @@ header {
 }
 .header-right img {
     display: flex;
+    justify-content: center;
     align-items: center;
-    height: 40px;}
+    height: 30px;
+}
 
 
 .header-actions a.cart {
@@ -70,6 +72,7 @@ header {
 .header-actions .user-name {
     color: #FFF;
     font-size: 16px;
+    margin-right: 10px;
 }
 
 /* Side Navbar Popup */
@@ -126,6 +129,7 @@ header {
     background-image: url('img/hero.jpg'); /* Optional: Add a background image */
     background-size: cover;
     background-position: center;
+    width:100% ;
 }
 
 .hero-content {
@@ -303,6 +307,7 @@ header {
     justify-content: space-evenly;
     gap: 20px;
     border-bottom: 50px solid  #FFF; /* Separator */
+    width: 100%;
 }
 
 .banner-card {
@@ -326,6 +331,7 @@ footer {
     color: #FFF;
     padding: 20px 0;
     text-align: center;
+    width: 100%;
 }
 
 .footer-container {
@@ -333,6 +339,7 @@ footer {
     justify-content: center;
     gap: 40px;
     margin-bottom: 20px;
+    
 }
 
 .quick-links, .social-media {
@@ -381,6 +388,7 @@ footer {
 .footer-bottom {
     background-color: #173B45;
     padding: 10px 0;
+    width: 100%;
 }
 
 .footer-bottom p {
@@ -388,5 +396,137 @@ footer {
     font-size: 1em;
 }
 
+/* Style for the three-dots button */
+.card .options-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+}
+
+/* Style for the popup */
+.card .popup {
+    display: none;
+    position: absolute;
+    top: 35px;
+    right: 10px;
+    background-color: #FFF;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+/* Style for the popup options */
+.card .popup a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.card .popup a:last-child {
+    border-bottom: none;
+}
+
+.card .popup a:hover {
+    background-color: #f8f8f8;
+}
+
+/* Featured Items Header Styles */
+.featured-items-header {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    margin-bottom: 20px;
+}
+
+.featured-items-header h2 {
+    margin: 0;
+    color: #B43F3F;
+    flex-grow: 1; /* Push the plus sign to the right */
+}
+
+.add-item-btn {
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: #FF8225;
+    cursor: pointer;
+    margin-left: 10px; /* Add a small space between the text and the button */
+}
+
+/* Add New Item Popup Styles */
+.add-item-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFF;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 100;
+    width: 400px; /* Set a fixed width for the popup */
+    max-height: 80vh; /* Limit height to viewport height */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+}
+
+.add-item-popup .popup-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-item-popup form {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-item-popup form label {
+    margin-top: 10px;
+}
+
+.add-item-popup form input, 
+.add-item-popup form textarea {
+    margin-top: 5px;
+    padding: 8px;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+}
+
+.add-item-popup form button {
+    margin-top: 10px;
+    background-color: #FF8225;
+    color: #FFF;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-item-popup form button:hover {
+    background-color: #B43F3F;
+}
+
+.close-popup-btn {
+    margin-top: 10px;
+    background: none;
+    border: none;
+    color: #B43F3F;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.close-popup-btn:hover {
+    color: #FF8225;
+}
 
 

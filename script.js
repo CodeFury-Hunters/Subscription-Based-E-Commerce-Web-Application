@@ -92,4 +92,122 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCards('ready-to-eat-container', readyToEatItems);
 });
 
-   
+function togglePopup(cardId) {
+    const popup = document.querySelector(`#${cardId} .popup`);
+    popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+}
+
+function deleteCard(cardId) {
+    const card = document.getElementById(cardId);
+    card.remove();
+}
+
+function addItem(cardId) {
+    // Logic to add new items can be implemented here
+    alert('Add new items functionality is not implemented yet.');
+}
+
+function renderCards(sectionId, items) {
+    const container = document.getElementById(sectionId);
+    let cardsHTML = '';
+    
+    items.forEach(item => {
+        cardsHTML += `
+            <div class="card" id="${item.id}" style="position: relative;">
+                <button class="options-btn" onclick="togglePopup('${item.id}')">⋮</button>
+                <div class="popup">
+                    <a onclick="deleteCard('${item.id}')">Delete the card</a>
+                    <a onclick="addItem('${item.id}')">Add new items</a>
+                </div>
+                <img src="${item.imgSrc}" alt="${item.altText}">
+                <div class="card-content">
+                    <h3>${item.title}</h3>
+                    <p>${item.description}</p>
+                    <a href="${item.link}" class="btn">Shop Now</a>
+                </div>
+            </div>
+        `;
+    });
+    
+    container.innerHTML = cardsHTML;
+
+    // Close any open popups if clicked outside
+    document.addEventListener('click', (event) => {
+        if (!event.target.matches('.options-btn')) {
+            const popups = document.querySelectorAll('.popup');
+            popups.forEach(popup => {
+                popup.style.display = 'none';
+            });
+        }
+    });
+}
+
+// Render cards
+document.addEventListener('DOMContentLoaded', () => {
+    renderCards('featured-items-container', featuredItems);
+    renderCards('ready-to-eat-container', readyToEatItems);
+});
+
+   // Function to toggle the add item popup
+function toggleAddItemPopup() {
+    const popup = document.getElementById('add-item-popup');
+    popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+}
+
+// Handle form submission to add a new item
+document.getElementById('add-item-form').addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const title = document.getElementById('item-title').value;
+    const imgSrc = document.getElementById('item-img').value;
+    const description = document.getElementById('item-description').value;
+
+    const newItem = {
+        id: title.toLowerCase().replace(/\s+/g, '-'),
+        imgSrc: imgSrc,
+        altText: title,
+        title: title,
+        description: description,
+        link: '#'
+    };
+
+    featuredItems.push(newItem);
+    renderCards('featured-items-container', featuredItems);
+    toggleAddItemPopup();
+});
+
+// Adjust existing functions if needed
+function renderCards(sectionId, items) {
+    const container = document.getElementById(sectionId);
+    let cardsHTML = '';
+    
+    items.forEach(item => {
+        cardsHTML += `
+            <div class="card" id="${item.id}" style="position: relative;">
+                <button class="options-btn" onclick="togglePopup('${item.id}')">⋮</button>
+                <div class="popup">
+                    <a onclick="deleteCard('${item.id}')">Delete the card</a>
+                    <a onclick="addItem('${item.id}')">Add new items</a>
+                </div>
+                <img src="${item.imgSrc}" alt="${item.altText}">
+                <div class="card-content">
+                    <h3>${item.title}</h3>
+                    <p>${item.description}</p>
+                    <a href="${item.link}" class="btn">Shop Now</a>
+                </div>
+            </div>
+        `;
+    });
+    
+    container.innerHTML = cardsHTML;
+
+    // Close any open popups if clicked outside
+    document.addEventListener('click', (event) => {
+        if (!event.target.matches('.options-btn')) {
+            const popups = document.querySelectorAll('.popup');
+            popups.forEach(popup => {
+                popup.style.display = 'none';
+            });
+        }
+    });
+}

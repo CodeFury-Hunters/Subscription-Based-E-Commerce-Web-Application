@@ -17,8 +17,8 @@
                 </div>
             </div>
             <div class="header-right">
-                <a href="#" class="cart"><img src="img/addtocart.png" alt=""></a>
-                <span class="user-name">Hi User</span>
+                <span class="user-name">Hi User</s>
+                <a href="#" class="cart"><img src="img/addtocart.png" alt=""></a>   
             </div>
         </div>
     </header>
@@ -44,13 +44,35 @@
         </div>
     </section>
 
-    <!-- Featured Items Section -->
-    <section class="featured-items">
+   <!-- Featured Items Section -->
+<section class="featured-items">
+    <div class="featured-items-header">
         <h2>Featured Items</h2>
-        <div id="featured-items-container" class="card-container">
-            <!-- Cards will be dynamically inserted here -->
-        </div>
-    </section>
+        <button class="add-item-btn" onclick="toggleAddItemPopup()">+</button>
+    </div>
+    <div id="featured-items-container" class="card-container">
+        <!-- Cards will be dynamically inserted here -->
+    </div>
+</section>
+
+<!-- Add New Item Popup -->
+<div id="add-item-popup" class="add-item-popup">
+    <div class="popup-content">
+        <h3>Add New Item</h3>
+        <form id="add-item-form">
+            <label for="item-title">Title:</label>
+            <input type="text" id="item-title" required>
+            <label for="item-img">Image URL:</label>
+            <input type="text" id="item-img" required>
+            <label for="item-description">Description:</label>
+            <textarea id="item-description" required></textarea>
+            <button type="submit">Add Item</button>
+        </form>
+        <button class="close-popup-btn" onclick="toggleAddItemPopup()">Close</button>
+    </div>
+</div>
+
+
 
     <!-- Ready-to-Eat Section -->
     <section class="ready-to-eat">
