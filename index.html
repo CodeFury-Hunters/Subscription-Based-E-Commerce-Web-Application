@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Website</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <div class="header-left">
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <div class="logo">
+                    <img src="img/logo.png" alt="Logo">
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="#" class="cart"><img src="img/addtocart.png" alt=""></a>
+                <span class="user-name">Hi User</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Side Navbar Popup -->
+    <div id="sidebar" class="sidebar">
+        <a href="#" class="closebtn" onclick="toggleSidebar()">&times;</a>
+        <a href="#">Home</a>
+        <a href="#">Products</a>
+        <a href="#">Orders</a>
+        <a href="#">Subscriptions</a>
+        <a href="#">Account Settings</a>
+        <a href="#">Help</a>
+    </div>
+    <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Our E-Commerce Store</h1>
+            <p>Discover the best deals and exclusive products just for you!</p>
+            <a href="#" class="cta-button">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Featured Items Section -->
+    <section class="featured-items">
+        <h2>Featured Items</h2>
+        <div id="featured-items-container" class="card-container">
+            <!-- Cards will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <!-- Ready-to-Eat Section -->
+    <section class="ready-to-eat">
+        <h2>Ready-to-Eat Meals</h2>
+        <div id="ready-to-eat-container" class="card-container">
+            <!-- Cards will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <!-- Experience Banner Section -->
+    <section class="experience-banner">
+        <div class="banner-card">
+            <h3>5+ Years of Experience</h3>
+        </div>
+        <div class="banner-card">
+            <h3>100k+ Meals Delivered</h3>
+        </div>
+        <div class="banner-card">
+            <h3>1000+ Clients</h3>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-container">
+            <div class="quick-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Terms and Conditions</a></li>
+                    <li><a href="#">Cancellation and Refund Policy</a></li>
+                </ul>
+            </div>
+            <div class="social-media">
+                <h3>Follow Us</h3>
+                <a href="https://www.instagram.com" class="social-icon instagram" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <a href="https://www.facebook.com" class="social-icon facebook" target="_blank" rel="noopener noreferrer">Facebook</a>
+                <!-- Add more social media links as needed -->
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2024 Our Kitchen Pvt. Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
