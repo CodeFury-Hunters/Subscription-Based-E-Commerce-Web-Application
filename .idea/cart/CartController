@@ -1,0 +1,26 @@
+@RestController
+@RequestMapping("/api/cart")
+public class CartController {
+
+    private List<CartItem> cart = new ArrayList<>();
+
+    @GetMapping("/items")
+    public List<CartItem> getCartItems() {
+        return cart;
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<String> addItem(@RequestBody CartItem item) {
+        cart.add(item);
+        return ResponseEntity.ok("Item added to cart");
+    }
+
+    @DeleteMapping("/remove/{index}")
+    public ResponseEntity<String> removeItem(@PathVariable int index) {
+        if (index >= 0 && index < cart.size()) {
+            cart.remove(index);
+            return ResponseEntity.ok("Item removed from cart");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid item index");
+    }
+}
