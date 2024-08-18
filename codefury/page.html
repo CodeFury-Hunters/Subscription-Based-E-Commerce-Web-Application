@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Options</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8eded;
+            background-image: url('food1.png'); /* Background image */
+            background-size: cover; /* Cover the entire background */
+            background-position: center; /* Center the image */
+            color: #3f173b;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center the content horizontally */
+        }
+
+        h1 {
+            text-align: center;
+            color: #b43f3f;
+            margin-bottom: 40px;
+        }
+
+        .section {
+            width: 100%; /* Make section take full width */
+            max-width: 900px; /* Ensure it doesn’t exceed the container width */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center the content horizontally */
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #b43f3f;
+            text-align: center; /* Center the section headings */
+            margin-bottom: 20px;
+        }
+
+        .meal-items {
+            display: flex;
+            justify-content: center; /* Center items horizontally */
+            flex-wrap: wrap;
+        }
+
+        .meal-item {
+            background-color: #fff;
+            padding: 15px;
+            margin: 10px;
+            border: 1px solid #ff8225;
+            border-radius: 5px;
+            text-align: center;
+            width: calc(25% - 20px);
+            box-sizing: border-box;
+        }
+
+        .meal-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .quick-view-btn {
+            background-color: #ff8225;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .quick-view-btn:hover {
+            background-color: #b43f3f;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #ff8325;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .product-container {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .product-image {
+            flex: 1;
+            max-width: 50%;
+        }
+
+        .product-image img {
+            width: 80%;
+            border-radius: 8px;
+        }
+
+        .product-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .product h2 {
+            color: #ff8225;
+            margin-top: 0;
+        }
+
+        .product select,
+        .product input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #e23030;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .product button {
+            background-color: #ff8225;
+            color: #ffffff;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .rating {
+            color: #ff8225;
+            margin-bottom: 10px;
+        }
+
+        #custom-dates {
+            display: none;
+            margin-top: 15px;
+        }
+
+        #custom-dates label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        #custom-dates input {
+            width: calc(50% - 5px);
+            display: inline-block;
+        }
+
+        #custom-dates .date-input {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Meal Options</h1>
+
+        <div id="meal-sections">
+            <!-- Meal sections will be dynamically inserted here -->
+        </div>
+
+        <div id="quick-view-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeQuickView()">&times;</span>
+                <div class="product-container">
+                    <div class="product-image">
+                        <img id="modal-image" src="" alt="">
+                    </div>
+                    <div class="product-details">
+                        <div class="product">
+                            <h2 id="modal-heading"></h2>
+                            <p class="rating">★★★★☆</p>
+                            <p id="modal-price">Rs. 70</p>
+                            <select id="meal-type">
+                                <option value="breakfast">Breakfast</option>
+                                <option value="Lunch">Lunch</option>
+                                <option value="Dinner">Dinner</option>
+                                <option value="option">option</option>
+                            </select>
+                            <select id="meal-plan" onchange="toggleCustomDates()">
+                                <option value="WEEKLY">WEEKLY</option>
+                                <option value="MONTHLY">MONTHLY</option>
+                                <option value="BI-WEEKLY">BI-WEEKLY</option>
+                                <option value="CUSTOM">CUSTOM</option>
+                            </select>
+                            <div id="custom-dates">
+                                <label for="start-date">Start Date:</label>
+                                <input type="date" id="start-date" name="start-date">
+                                
+                                <label for="end-date">End Date:</label>
+                                <input type="date" id="end-date" name="end-date">
+                            </div>
+                            <p>Meal Quantity</p>
+                            <input type="number" min="1">
+                            <button onclick="addToCart()">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Meal Data Object
+        const mealData = {
+            breakfast: [
+                { name: 'Dosa', imgSrc: 'images/dosa.jpg', price: 50 },
+                { name: 'Idli', imgSrc: 'images/idli.jpg', price: 40 },
+                { name: 'Poha', imgSrc: 'images/poha.jpg', price: 70 },
+                { name: 'Breakfast Combo', imgSrc: 'images/breakfast_combo.jpg', price: 90 }
+            ],
+            meal: [
+                { name: 'Rajma Chawal', imgSrc: 'images/Rajma_Chawal.jpg', price: 80 },
+                { name: 'Biriyani', imgSrc: 'images/biriyani.jpg', price: 100 },
+                { name: 'Veg Thali', imgSrc: 'images/vegthali.jpg', price: 120 },
+                { name: 'Non-Veg Thali', imgSrc: 'images/Non-veg Thali.jpg', price: 150 }
+            ],
+            sweet: [
+                { name: 'Ladoo', imgSrc: 'images/Ladoo.jpg', price: 30 },
+                { name: 'Halwa', imgSrc: 'images/halwa.jpg', price: 40 },
+                { name: 'Gulab Jamun', imgSrc: 'images/gulabjamun.jpg', price: 50 },
+                { name: 'Kaju Katli', imgSrc: 'images/kajukatli.jpg', price: 60 }
+            ]
+        };
+
+        function renderMeals() {
+            const container = document.getElementById('meal-sections');
+            container.innerHTML = '';
+
+            for (const [mealType, items] of Object.entries(mealData)) {
+                const section = document.createElement('div');
+                section.className = 'section';
+                
+                const heading = document.createElement('h2');
+                heading.textContent = mealType.charAt(0).toUpperCase() + mealType.slice(1);
+                section.appendChild(heading);
+                
+                const mealItemsContainer = document.createElement('div');
+                mealItemsContainer.className = 'meal-items';
+                
+                items.forEach(item => {
+                    const mealItem = document.createElement('div');
+                    mealItem.className = 'meal-item';
+                    
+                    const img = document.createElement('img');
+                    img.src = item.imgSrc;
+                    img.alt = item.name;
+                    
+                    const button = document.createElement('button');
+                    button.className = 'quick-view-btn';
+                    button.textContent = 'Quick View';
+                    button.onclick = () => showQuickView(item);
+                    
+                    mealItem.appendChild(img);
+                    mealItem.appendChild(button);
+                    
+                    mealItemsContainer.appendChild(mealItem);
+                });
+                
+                section.appendChild(mealItemsContainer);
+                container.appendChild(section);
+            }
+        }
+
+        function showQuickView(meal) {
+            const modal = document.getElementById("quick-view-modal");
+            const heading = document.getElementById("modal-heading");
+            const image = document.getElementById("modal-image");
+            const price = document.getElementById("modal-price");
+
+            heading.textContent = meal.name;
+            image.src = meal.imgSrc;
+            price.textContent = "Rs. " + meal.price;
+
+            modal.style.display = "block";
+        }
+
+        function closeQuickView() {
+            var modal = document.getElementById("quick-view-modal");
+            modal.style.display = "none";
+        }
+
+        function addToCart() {
+            alert('The item has been added to your cart.');
+        }
+
+        function toggleCustomDates() {
+            var mealPlan = document.getElementById('meal-plan').value;
+            var customDatesDiv = document.getElementById('custom-dates');
+            
+            if (mealPlan === 'CUSTOM') {
+                customDatesDiv.style.display = 'block';
+            } else {
+                customDatesDiv.style.display = 'none';
+            }
+        }
+
+        window.onclick = function(event) {
+            var modal = document.getElementById("quick-view-modal");
+            if (event.target == modal) {
+                closeQuickView();
+            }
+        }
+
+        // Initial render
+        renderMeals();
+    </script>
+</body>
+</html>
