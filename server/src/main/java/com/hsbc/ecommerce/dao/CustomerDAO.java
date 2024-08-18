@@ -15,7 +15,7 @@ public class CustomerDAO {
 
     // Create a new customer
     public void saveCustomer(Customer customer) throws SQLException {
-        String sql = "INSERT INTO customers (name, email, password, address, phone, created_at) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO customer (name, email, password, address, phone, created_at) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, customer.getName());
             stmt.setString(2, customer.getEmail());
@@ -39,7 +39,7 @@ public class CustomerDAO {
 
     // Retrieve a customer by ID
     public Customer getCustomerById(int id) throws SQLException {
-        String sql = "SELECT * FROM customers WHERE id = ?";
+        String sql = "SELECT * FROM customer WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -57,7 +57,7 @@ public class CustomerDAO {
     // Retrieve all customers
     public List<Customer> getAllCustomers() throws SQLException {
         List<Customer> customers = new ArrayList<>();
-        String sql = "SELECT * FROM customers";
+        String sql = "SELECT * FROM customer";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -72,7 +72,7 @@ public class CustomerDAO {
 
     // Update a customer
     public void updateCustomer(Customer customer) throws SQLException {
-        String sql = "UPDATE customers SET name = ?, email = ?, password = ?, address = ?, phone = ? WHERE id = ?";
+        String sql = "UPDATE customer SET name = ?, email = ?, password = ?, address = ?, phone = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, customer.getName());
             stmt.setString(2, customer.getEmail());
@@ -87,7 +87,7 @@ public class CustomerDAO {
 
     // Delete a customer by ID
     public void deleteCustomer(int id) throws SQLException {
-        String sql = "DELETE FROM customers WHERE id = ?";
+        String sql = "DELETE FROM customer WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -96,7 +96,7 @@ public class CustomerDAO {
 
     // Save customer subscriptions
     private void saveSubscriptions(Customer customer) throws SQLException {
-        String sql = "INSERT INTO customer_subscriptions (customer_id, subscription_id) VALUES (?, ?)";
+        String sql = "INSERT INTO subscription (customerId, id) VALUES (?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             for (int subId : customer.getSubscriptions()) {
                 stmt.setInt(1, customer.getId());
@@ -110,7 +110,7 @@ public class CustomerDAO {
     // Get subscriptions for a customer
     private List<Integer> getCustomerSubscriptions(int customerId) throws SQLException {
         List<Integer> subscriptions = new ArrayList<>();
-        String sql = "SELECT subscription_id FROM customer_subscriptions WHERE customer_id = ?";
+        String sql = "id FROM subscriptions WHERE customerId = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, customerId);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -125,7 +125,7 @@ public class CustomerDAO {
     // Get order history for a customer
     private List<Integer> getCustomerOrderHistory(int customerId) throws SQLException {
         List<Integer> orderHistory = new ArrayList<>();
-        String sql = "SELECT id FROM orders WHERE customer_id = ?";
+        String sql = "SELECT id FROM orders WHERE customerId = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, customerId);
             try (ResultSet rs = stmt.executeQuery()) {
