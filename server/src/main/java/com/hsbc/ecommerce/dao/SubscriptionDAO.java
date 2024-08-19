@@ -18,7 +18,7 @@ public class SubscriptionDAO {
 
     // Create a new subscription
     public void saveSubscription(Subscription subscription) throws SQLException {
-        String sql = "INSERT INTO subscriptions (customer_id, product_id, types, start_date, end_date, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO subscription (customer_id, product_id, types, start_date, end_date, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, subscription.getCustomerId());
             stmt.setInt(2, subscription.getProductId());
@@ -41,7 +41,7 @@ public class SubscriptionDAO {
 
     // Retrieve a subscription by ID
     public Subscription getSubscriptionById(int id) throws SQLException {
-        String sql = "SELECT * FROM subscriptions WHERE id = ?";
+        String sql = "SELECT * FROM subscription WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -56,7 +56,7 @@ public class SubscriptionDAO {
     // Retrieve all subscriptions
     public List<Subscription> getAllSubscriptions() throws SQLException {
         List<Subscription> subscriptions = new ArrayList<>();
-        String sql = "SELECT * FROM subscriptions";
+        String sql = "SELECT * FROM subscription";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -68,7 +68,7 @@ public class SubscriptionDAO {
 
     // Update a subscription
     public void updateSubscription(Subscription subscription) throws SQLException {
-        String sql = "UPDATE subscriptions SET customer_id = ?, product_id = ?, types = ?, start_date = ?, end_date = ?, status = ? WHERE id = ?";
+        String sql = "UPDATE subscription SET customer_id = ?, product_id = ?, types = ?, start_date = ?, end_date = ?, status = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, subscription.getCustomerId());
             stmt.setInt(2, subscription.getProductId());
@@ -84,7 +84,7 @@ public class SubscriptionDAO {
 
     // Delete a subscription by ID
     public void deleteSubscription(int id) throws SQLException {
-        String sql = "DELETE FROM subscriptions WHERE id = ?";
+        String sql = "DELETE FROM subscription WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -131,7 +131,7 @@ public class SubscriptionDAO {
     }
 
     public void deactivateSubscription(int subscriptionId) throws SQLException {
-        String sql = "UPDATE subscriptions SET status = 'inactive' WHERE id = ?";
+        String sql = "UPDATE subscription SET status = 'inactive' WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, subscriptionId);
             stmt.executeUpdate();
@@ -139,7 +139,7 @@ public class SubscriptionDAO {
     }
 
     public void activateSubscription(int subscriptionId) throws SQLException {
-        String sql = "UPDATE subscriptions SET status = 'active' WHERE id = ?";
+        String sql = "UPDATE subscription SET status = 'active' WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, subscriptionId);
             stmt.executeUpdate();

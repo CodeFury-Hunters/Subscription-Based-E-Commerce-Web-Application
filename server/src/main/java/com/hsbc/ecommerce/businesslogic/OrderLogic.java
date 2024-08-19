@@ -14,7 +14,6 @@ public class OrderLogic {
     }
 
     public void placeOrder(Order order) {
-        // Business logic for placing a new order
         try {
             orderDAO.saveOrder(order);
         } catch (SQLException e) {
@@ -23,7 +22,6 @@ public class OrderLogic {
     }
 
     public void updateOrder(Order order) {
-        // Business logic for updating an existing order
         try {
             orderDAO.updateOrder(order);
         } catch (SQLException e) {
@@ -32,7 +30,6 @@ public class OrderLogic {
     }
 
     public void cancelOrder(int orderId) {
-        // Business logic for canceling an order
         try {
             orderDAO.deleteOrder(orderId);
         } catch (SQLException e) {
@@ -41,7 +38,6 @@ public class OrderLogic {
     }
 
     public Order getOrderById(int orderId) {
-        // Business logic for retrieving an order by its ID
         try {
             return orderDAO.getOrderById(orderId);
         } catch (SQLException e) {
@@ -50,7 +46,6 @@ public class OrderLogic {
     }
 
     public List<Order> getAllOrders() {
-        // Business logic for retrieving all orders
         try {
             return orderDAO.getAllOrders();
         } catch (SQLException e) {

@@ -15,7 +15,7 @@ public class AdminDAO {
 
     // Create a new admin
     public void saveAdmin(Admin admin) throws SQLException {
-        String sql = "INSERT INTO admins (name, email, password, role, created_at) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO admin (name, email, password, role, created_at) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, admin.getName());
             stmt.setString(2, admin.getEmail());
@@ -35,7 +35,7 @@ public class AdminDAO {
 
     // Retrieve an admin by ID
     public Admin getAdminById(int id) throws SQLException {
-        String sql = "SELECT * FROM admins WHERE id = ?";
+        String sql = "SELECT * FROM admin WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -48,7 +48,7 @@ public class AdminDAO {
     }
 
     public Admin getAdminByEmail(String email) throws SQLException {
-        String sql = "SELECT * FROM admins WHERE email = ?";
+        String sql = "SELECT * FROM admin WHERE email = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, email);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -63,7 +63,7 @@ public class AdminDAO {
     // Retrieve all admins
     public List<Admin> getAllAdmins() throws SQLException {
         List<Admin> admins = new ArrayList<>();
-        String sql = "SELECT * FROM admins";
+        String sql = "SELECT * FROM admin";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -75,7 +75,7 @@ public class AdminDAO {
 
     // Update an admin
     public void updateAdmin(Admin admin) throws SQLException {
-        String sql = "UPDATE admins SET name = ?, email = ?, password = ?, role = ? WHERE id = ?";
+        String sql = "UPDATE admin SET name = ?, email = ?, password = ?, role = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, admin.getName());
             stmt.setString(2, admin.getEmail());
@@ -89,7 +89,7 @@ public class AdminDAO {
 
     // Delete an admin by ID
     public void deleteAdmin(int id) throws SQLException {
-        String sql = "DELETE FROM admins WHERE id = ?";
+        String sql = "DELETE FROM admin WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();

@@ -23,7 +23,6 @@ public class ProductLogic {
     }
 
     public void updateProduct(Product product) {
-        // Business logic for updating a product
         try {
             productDAO.updateProduct(product);
         } catch (SQLException e) {
@@ -32,7 +31,6 @@ public class ProductLogic {
     }
 
     public void deleteProduct(int productId) {
-        // Business logic for deleting a product
         try {
             productDAO.deleteProduct(productId);
         } catch (SQLException e) {
@@ -41,7 +39,6 @@ public class ProductLogic {
     }
 
     public List<Product> getAllProducts() {
-        // Business logic for retrieving all products
         try {
             return productDAO.getAllProducts();
         } catch (SQLException e) {

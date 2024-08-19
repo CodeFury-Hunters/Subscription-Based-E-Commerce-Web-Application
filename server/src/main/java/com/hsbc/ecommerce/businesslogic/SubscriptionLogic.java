@@ -14,7 +14,6 @@ public class SubscriptionLogic {
     }
 
     public void defineSubscription(Subscription subscription) {
-        // Business logic for defining a subscription
         try {
             subscriptionDAO.saveSubscription(subscription);
         } catch (SQLException e) {
@@ -23,7 +22,6 @@ public class SubscriptionLogic {
     }
 
     public void activateSubscription(int subscriptionId) {
-        // Business logic for activating a subscription
         try {
             subscriptionDAO.activateSubscription(subscriptionId);
         } catch (SQLException e) {
@@ -32,7 +30,6 @@ public class SubscriptionLogic {
     }
 
     public void deactivateSubscription(int subscriptionId) {
-        // Business logic for deactivating a subscription
         try {
             subscriptionDAO.deactivateSubscription(subscriptionId);
         } catch (SQLException e) {
@@ -41,7 +38,6 @@ public class SubscriptionLogic {
     }
 
     public List<Subscription> getAllSubscriptions() {
-        // Business logic for retrieving all subscriptions
         try {
             return subscriptionDAO.getAllSubscriptions();
         } catch (SQLException e) {
