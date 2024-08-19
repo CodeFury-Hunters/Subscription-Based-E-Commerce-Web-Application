@@ -211,3 +211,29 @@ function renderCards(sectionId, items) {
         }
     });
 }
+// Function to load HTML fragments
+function loadHTML(id, url) {
+    fetch(url)
+        .then(response => response.text())
+        .then(data => document.getElementById(id).innerHTML = data)
+        .catch(error => console.log('Error loading HTML:', error));
+}
+
+// Load header, sidebar, and footer
+loadHTML('header-container', 'header.html');
+loadHTML('sidebar-container', 'sidebar.html');
+loadHTML('footer-container', 'footer.html');
+
+// Existing toggleSidebar function
+function toggleSidebar() {
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('overlay');
+    if (sidebar.style.width === '250px') {
+        sidebar.style.width = '0';
+        overlay.style.display = 'none';
+    } else {
+        sidebar.style.width = '250px';
+        overlay.style.display = 'block';
+    }
+}
+
