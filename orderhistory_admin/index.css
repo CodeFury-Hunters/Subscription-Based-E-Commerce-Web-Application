@@ -1,0 +1,131 @@
+body {
+    background-color: #ffefd5;
+    font-family: Arial, sans-serif;
+}
+
+.orders-page {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    margin: 2rem auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#orders {
+    display: flex;
+    flex-direction: column; /* Column layout for orders */
+    gap: 20px;
+}
+
+.order-header, .order-details {
+    display: flex;
+    flex-direction: row; /* Horizontal layout */
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.order-header {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd; /* Border for separation */
+}
+
+.order {
+    background-color: white;
+    border: 2px solid black; /* Transparent border for spacing */
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    display: flex;
+    flex-direction: column; /* Column layout for order container */
+}
+
+.order:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    border-color: #ff8225;
+}
+
+.order-details {
+    border-bottom: 1px solid #ddd; /* Border for separation */
+    padding-bottom: 1rem;
+}
+
+.order-details p {
+    margin: 0;
+    padding: 0 1rem;
+    flex: 1; /* Ensure equal spacing */
+}
+
+.order-details .bold {
+    font-weight: bold;
+}
+
+.order-details .highlight {
+    color: #ff8225;
+}
+
+.order-status {
+    color: #000;
+}
+
+.order-status.completed {
+    color: green;
+}
+
+.order-status.pending {
+    color: darkblue;
+}
+
+.order-status.cancelled {
+    color: red;
+}
+
+.payment-status {
+    font-weight: bold;
+}
+
+.payment-status.paid {
+    color: green;
+}
+
+.payment-status.unpaid {
+    color: red;
+}
+
+.subscription-type {
+    color: #ff8225;
+}
+
+.heading {
+    font-size: 2.5rem;
+    color: #333;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+    transition: color 0.3s;
+}
+
+.heading::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 4px;
+    background-color: #ff8225;
+    bottom: 0;
+    left: 25%;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.heading:hover {
+    color: #ff8225;
+}
+
+.heading:hover::after {
+    width: 100%;
+    left: 0;
+}

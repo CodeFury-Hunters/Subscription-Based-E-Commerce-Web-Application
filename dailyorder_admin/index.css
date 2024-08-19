@@ -1,0 +1,136 @@
+body {
+    background-color: #ffefd5;
+    font-family: Arial, sans-serif;
+}
+
+.deliveries-page {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    margin: 2rem auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#deliveries {
+    display: flex;
+    flex-direction: column; /* Column layout for deliveries */
+    gap: 20px;
+}
+
+.delivery-header,
+.delivery-details {
+    display: flex;
+    flex-direction: row; /* Horizontal layout */
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.delivery-header {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd; /* Border for separation */
+}
+
+.delivery {
+    background-color: white;
+    border: 2px solid black; /* Transparent border for spacing */
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    display: flex;
+    flex-direction: column; /* Column layout for delivery container */
+}
+
+.delivery:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    border-color: #ff8225;
+}
+
+.delivery-details {
+    border-bottom: 1px solid #ddd; /* Border for separation */
+    padding-bottom: 1rem;
+}
+
+.delivery-details p {
+    margin: 0;
+    padding: 0 1rem;
+    flex: 1; /* Ensure equal spacing */
+}
+
+.delivery-details .bold {
+    font-weight: bold;
+}
+
+.delivery-details .highlight {
+    color: #ff8225;
+}
+
+.delivery-status {
+    color: #000;
+}
+
+.delivery-status.delivered {
+    color: green;
+}
+
+.delivery-status.in-transit {
+    color: darkblue;
+}
+
+.delivery-status.scheduled {
+    color: orange;
+}
+
+.delivery-status.failed {
+    color: red;
+}
+
+.payment-status {
+    font-weight: bold;
+}
+
+.payment-status.paid {
+    color: green;
+}
+
+.payment-status.pending {
+    color: orange;
+}
+
+.payment-status.failed {
+    color: red;
+}
+
+.heading {
+    font-size: 2.5rem;
+    color: #333;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+    transition: color 0.3s;
+}
+
+.heading::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 4px;
+    background-color: #ff8225;
+    bottom: 0;
+    left: 25%;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.heading:hover {
+    color: #ff8225;
+}
+
+.heading:hover::after {
+    width: 100%;
+    left: 0;
+}
