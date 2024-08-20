@@ -60,13 +60,28 @@ function removeItem(index) {
 
     renderCart();
 }
+// Function to apply a promo code
+function applyPromoCode() {
+    const promoCodeInput = document.getElementById('promo-code-input').value.trim();
+    let discount = 0;
+    
+    if (promoCodeInput === 'SAVE10') {
+        discount = 10; // Rs. 10 flat discount for demonstration
+        alert('Promo code applied successfully!');
+    } else {
+        alert('Invalid promo code.');
+    }
 
-// Function to update the cart summary (subtotal, delivery charges, total, etc.)
+    localStorage.setItem('discount', discount);
+    updateCartSummary();
+}
+
+// Updated function to update the cart summary with discount
 function updateCartSummary() {
     let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
     const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
     const deliveryCharges = 50.00; // Example flat delivery charge
-    const discount = 0.00; // Replace with actual discount logic if applicable
+    const discount = parseFloat(localStorage.getItem('discount')) || 0.00;
     const total = (parseFloat(subtotal) + deliveryCharges - discount).toFixed(2);
 
     document.getElementById('subtotal').textContent = subtotal;
@@ -75,10 +90,8 @@ function updateCartSummary() {
     document.getElementById('total').textContent = total;
 }
 
-// Function to apply a promo code (dummy function for now)
-function applyPromoCode() {
-    alert('Promo code applied!');
-}
+
+
 
 // Function to proceed to the checkout page
 function proceedToCheckout() {

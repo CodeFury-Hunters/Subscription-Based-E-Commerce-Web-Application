@@ -53,9 +53,9 @@ document.getElementById('payment-form').addEventListener('submit', function(even
         cardNumber: document.getElementById('card-number').value,
         expiryDate: document.getElementById('expiry-date').value,
         cvv: document.getElementById('cvv').value,
-        billingAddress: document.getElementById('billing-address').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value
+       // billingAddress: document.getElementById('billing-address').value,
+       // email: document.getElementById('email').value,
+       // phone: document.getElementById('phone').value
     };
 
     // Perform basic validation

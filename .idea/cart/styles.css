@@ -132,7 +132,32 @@ body {
 }
 
 /* Cart Summary */
+/* Add this to your styles.css to ensure the cart summary is visible */
 .cart-summary {
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+}
+
+.summary-details p {
+    margin: 5px 0;
+}
+
+.proceed-btn {
+    background-color: #FF8225; /* Or your preferred color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.proceed-btn:hover {
+    background-color: #B43F3F; /* Or your preferred hover color */
+}
+
+/* .cart-summary {
     flex: 1;
     padding: 20px;
 }
@@ -153,7 +178,7 @@ body {
     margin-top: 15px;
     font-size: 1.5rem;
     color: #B43F3F;
-}
+} */
 
 .promo-code-section {
     display: flex;

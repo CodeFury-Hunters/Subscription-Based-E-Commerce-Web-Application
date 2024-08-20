@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Options</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8eded;
+            background-image: url('food1.png');
+            background-size: cover;
+            background-position: center;
+            color: #3f173b;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #b43f3f;
+            margin-bottom: 40px;
+        }
+
+        .cart-icon-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        .cart-icon {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        .cart-popup {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            width: 250px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            display: none;
+            z-index: 100;
+            border-radius: 5px;
+        }
+
+        .cart-popup h3 {
+            margin: 0;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #b43f3f;
+        }
+
+        .cart-popup-items {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+
+        .cart-popup-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .cart-popup-item img {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .cart-popup-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .cart-popup-buttons button {
+            padding: 8px 12px;
+            border: none;
+            background-color: #ff8225;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cart-popup-buttons button:hover {
+            background-color: #b43f3f;
+        }
+
+        .section {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #b43f3f;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .meal-items {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .meal-item {
+            background-color: #fff;
+            padding: 15px;
+            margin: 10px;
+            border: 1px solid #ff8225;
+            border-radius: 5px;
+            text-align: center;
+            width: calc(25% - 20px);
+            box-sizing: border-box;
+        }
+
+        .meal-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .quick-view-btn {
+            background-color: #ff8225;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .quick-view-btn:hover {
+            background-color: #b43f3f;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #ff8325;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .product-container {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .product-image {
+            flex: 1;
+            max-width: 50%;
+        }
+
+        .product-image img {
+            width: 80%;
+            border-radius: 8px;
+        }
+
+        .product-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .product h2 {
+            color: #ff8225;
+            margin-top: 0;
+        }
+
+        .product select,
+        .product input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #e23030;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .product button {
+            background-color: #ff8225;
+            color: #ffffff;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .rating {
+            color: #ff8225;
+            margin-bottom: 10px;
+        }
+
+        #custom-dates {
+            display: none;
+            margin-top: 15px;
+        }
+
+        #custom-dates label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        #custom-dates input {
+            width: calc(50% - 5px);
+            display: inline-block;
+        }
+
+        #custom-dates .date-input {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Meal Options</h1>
+
+        <!-- Cart Icon -->
+        <div class="cart-icon-container">
+            <img src="cart-icon.png" alt="Cart Icon" class="cart-icon" onclick="toggleCartPopup()">
+            <span class="cart-count">0</span>
+            <div class="cart-popup">
+                <h3>Your Cart</h3>
+                <div class="cart-popup-items"></div>
+                <div class="cart-popup-buttons">
+                    <button onclick="goToCart()">Go to Cart</button>
+                    <button onclick="proceedToCheckout()">Checkout</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="meal-sections">
+            <!-- Meal sections will be dynamically inserted here -->
+        </div>
+
+        <div id="quick-view-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeQuickView()">&times;</span>
+                <div class="product-container">
+                    <div class="product-image">
+                        <img id="modal-image" src="" alt="">
+                    </div>
+                    <div class="product-details">
+                        <div class="product">
+                            <h2 id="modal-heading"></h2>
+                            <p class="rating">★★★★☆</p>
+                            <p id="modal-price">Rs. 70</p>
+                            <select id="meal-type">
+                                <option value="breakfast">Breakfast</option>
+                                <option value="meal">Meal</option>
+                                <option value="sweet">Sweet</option>
+                            </select>
+                            <select id="meal-plan" onchange="toggleCustomDates()">
+                                <option value="WEEKLY">WEEKLY</option>
+                                <option value="MONTHLY">MONTHLY</option>
+                                <option value="BI-WEEKLY">BI-WEEKLY</option>
+                                <option value="CUSTOM">CUSTOM</option>
+                            </select>
+                            <div id="custom-dates">
+                                <label for="start-date">Start Date:</label>
+                                <input type="date" id="start-date" name="start-date">
+                                
+                                <label for="end-date">End Date:</label>
+                                <input type="date" id="end-date" name="end-date">
+                            </div>
+                            <p>Meal Quantity</p>
+                            <input id="modal-quantity" type="number" value="1" min="1">
+                            <button onclick="addToCart()">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const mealData = {
+            breakfast: [
+                { name: 'Dosa', imgSrc: 'images/dosa.jpg', price: 50 },
+                { name: 'Idli', imgSrc: 'images/idli.jpg', price: 40 },
+                { name: 'Poha', imgSrc: 'images/poha.jpg', price: 70 },
+                { name: 'Breakfast Combo', imgSrc: 'images/breakfast_combo.jpg', price: 90 }
+            ],
+            meal: [
+                { name: 'Rajma Chawal', imgSrc: 'images/Rajma_Chawal.jpg', price: 80 },
+                { name: 'Biriyani', imgSrc: 'images/biriyani.jpg', price: 100 },
+                { name: 'Veg Thali', imgSrc: 'images/vegthali.jpg', price: 120 },
+                { name: 'Non-Veg Thali', imgSrc: 'images/Non-veg Thali.jpg', price: 150 }
+            ],
+            sweet: [
+                { name: 'Ladoo', imgSrc: 'images/Ladoo.jpg', price: 30 },
+                { name: 'Halwa', imgSrc: 'images/halwa.jpg', price: 40 },
+                { name: 'Gulab Jamun', imgSrc: 'images/gulabjamun.jpg', price: 50 },
+                { name: 'Kaju Katli', imgSrc: 'images/kajukatli.jpg', price: 60 }
+            ]
+        };
+
+        function renderMealSections() {
+            const mealSections = document.getElementById('meal-sections');
+            for (const [category, items] of Object.entries(mealData)) {
+                const section = document.createElement('div');
+                section.className = 'section';
+                section.innerHTML = `<h2>${capitalizeFirstLetter(category)}</h2><div class="meal-items"></div>`;
+                const mealItemsContainer = section.querySelector('.meal-items');
+
+                items.forEach(item => {
+                    const mealItem = document.createElement('div');
+                    mealItem.className = 'meal-item';
+                    mealItem.innerHTML = `
+                        <img src="${item.imgSrc}" alt="${item.name}">
+                        <h3>${item.name}</h3>
+                        <p>Rs. ${item.price}</p>
+                        <button class="quick-view-btn" onclick='showQuickView("${item.name}", "${item.imgSrc}", ${item.price})'>Quick View</button>
+                    `;
+                    mealItemsContainer.appendChild(mealItem);
+                });
+
+                mealSections.appendChild(section);
+            }
+        }
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        function showQuickView(name, imgSrc, price) {
+            document.getElementById('modal-heading').innerText = name;
+            document.getElementById('modal-image').src = imgSrc;
+            document.getElementById('modal-price').innerText = `Rs. ${price}`;
+            document.getElementById('quick-view-modal').style.display = 'block';
+        }
+
+        function closeQuickView() {
+            document.getElementById('quick-view-modal').style.display = 'none';
+        }
+
+        function addToCart() {
+            const itemName = document.getElementById('modal-heading').innerText;
+            const itemPrice = parseFloat(document.getElementById('modal-price').innerText.replace('Rs. ', ''));
+            const itemQuantity = parseInt(document.getElementById('modal-quantity').value);
+            const itemImage = document.getElementById('modal-image').src;
+        
+            // Retrieve existing cart items from local storage
+            let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Check if the item already exists in the cart
+            const existingItem = cartItems.find(item => item.name === itemName);
+            if (existingItem) {
+                // Update the quantity of the existing item
+                existingItem.quantity += itemQuantity;
+            } else {
+                // Add new item to the cart
+                cartItems.push({ name: itemName, price: itemPrice, quantity: itemQuantity, image: itemImage });
+            }
+        
+            // Save the updated cart back to local storage
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+        
+            updateCartUI();
+            closeQuickView();
+        }
+
+        function toggleCartPopup() {
+            const cartPopup = document.querySelector('.cart-popup');
+            cartPopup.style.display = cartPopup.style.display === 'block' ? 'none' : 'block';
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartPopupItems = document.querySelector('.cart-popup-items');
+            const cartCount = document.querySelector('.cart-count');
+            
+            cartPopupItems.innerHTML = '';
+            cartCount.innerText = cartItems.reduce((count, item) => count + item.quantity, 0);
+
+            cartItems.forEach(item => {
+                cartPopupItems.innerHTML += `
+                    <div class="cart-popup-item">
+                        <img src="${item.image}" alt="${item.name}">
+                        <span>${item.name} x ${item.quantity}</span>
+                        <span>Rs. ${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `;
+            });
+        }
+
+        function goToCart() {
+            window.location.href = 'cart.html';
+        }
+
+        function proceedToCheckout() {
+            window.location.href = 'checkout.html';
+        }
+
+        function toggleCustomDates() {
+            const mealPlan = document.getElementById('meal-plan').value;
+            document.getElementById('custom-dates').style.display = mealPlan === 'CUSTOM' ? 'block' : 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMealSections();
+            updateCartUI();
+        });
+    </script>
+</body>
+</html>
