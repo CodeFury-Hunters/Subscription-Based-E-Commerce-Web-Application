@@ -7,7 +7,7 @@ import java.util.List;
 
 public class AdminDAO {
 
-    private Connection connection;
+    private final Connection connection;
 
     public AdminDAO(Connection connection) {
         this.connection = connection;
@@ -15,13 +15,12 @@ public class AdminDAO {
 
     // Create a new admin
     public void saveAdmin(Admin admin) throws SQLException {
-        String sql = "INSERT INTO admin (name, email, password, role, created_at) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO admin (name, email, password, created_at) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, admin.getName());
             stmt.setString(2, admin.getEmail());
             stmt.setString(3, admin.getPassword());
-            stmt.setString(4, admin.getRole());
-            stmt.setTimestamp(5, new Timestamp(admin.getCreatedAt().getTime()));
+            stmt.setTimestamp(4, new Timestamp(admin.getCreatedAt().getTime()));
 
             stmt.executeUpdate();
 
@@ -75,12 +74,11 @@ public class AdminDAO {
 
     // Update an admin
     public void updateAdmin(Admin admin) throws SQLException {
-        String sql = "UPDATE admin SET name = ?, email = ?, password = ?, role = ? WHERE id = ?";
+        String sql = "UPDATE admin SET name = ?, email = ?, password = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, admin.getName());
             stmt.setString(2, admin.getEmail());
             stmt.setString(3, admin.getPassword());
-            stmt.setString(4, admin.getRole());
             stmt.setInt(5, admin.getId());
 
             stmt.executeUpdate();
@@ -103,7 +101,6 @@ public class AdminDAO {
         admin.setName(rs.getString("name"));
         admin.setEmail(rs.getString("email"));
         admin.setPassword(rs.getString("password"));
-        admin.setRole(rs.getString("role"));
         admin.setCreatedAt(rs.getTimestamp("created_at"));
         return admin;
     }

@@ -7,7 +7,7 @@ public class Admin {
     private String name;
     private String email;
     private String password;
-    private String role;
+    private final String role;
     private Date createdAt;
 
     public Admin() {
@@ -49,10 +49,6 @@ public class Admin {
 
     public String getRole() {
         return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     public Date getCreatedAt() {

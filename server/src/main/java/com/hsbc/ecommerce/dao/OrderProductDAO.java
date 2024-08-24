@@ -7,7 +7,7 @@ import java.util.List;
 
 public class OrderProductDAO {
 
-    private Connection connection;
+    private final Connection connection;
 
     public OrderProductDAO(Connection connection) {
         this.connection = connection;
@@ -15,7 +15,7 @@ public class OrderProductDAO {
 
     // Create a new order product
     public void saveOrderProduct(OrderProduct orderProduct) throws SQLException {
-        String sql = "INSERT INTO order_products (order_id, product_id, quantity) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO order_product (order_id, product_id, quantity) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, orderProduct.getOrderId());
             stmt.setInt(2, orderProduct.getProductId());
@@ -26,7 +26,7 @@ public class OrderProductDAO {
 
     // Retrieve an order product by ID
     public OrderProduct getOrderProductById(int id) throws SQLException {
-        String sql = "SELECT * FROM order_products WHERE id = ?";
+        String sql = "SELECT * FROM order_product WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -41,7 +41,7 @@ public class OrderProductDAO {
     // Retrieve all order products
     public List<OrderProduct> getAllOrderProducts() throws SQLException {
         List<OrderProduct> orderProducts = new ArrayList<>();
-        String sql = "SELECT * FROM order_products";
+        String sql = "SELECT * FROM order_product";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -53,7 +53,7 @@ public class OrderProductDAO {
 
     // Update an order product
     public void updateOrderProduct(OrderProduct orderProduct) throws SQLException {
-        String sql = "UPDATE order_products SET quantity = ? WHERE order_id = ? AND product_id = ?";
+        String sql = "UPDATE order_product SET quantity = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, orderProduct.getQuantity());
             stmt.setInt(2, orderProduct.getOrderId());
@@ -64,7 +64,7 @@ public class OrderProductDAO {
 
     // Delete an order product
     public void deleteOrderProduct(int orderId, int productId) throws SQLException {
-        String sql = "DELETE FROM order_products WHERE order_id = ? AND product_id = ?";
+        String sql = "DELETE FROM order_product WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, orderId);
             stmt.setInt(2, productId);
@@ -75,7 +75,7 @@ public class OrderProductDAO {
     // Retrieve all OrderProduct objects by orderId
     public List<OrderProduct> getOrderProductsByOrderId(int orderId) throws SQLException {
         List<OrderProduct> orderProducts = new ArrayList<>();
-        String sql = "SELECT * FROM order_products WHERE order_id = ?";
+        String sql = "SELECT * FROM order_product WHERE order_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, orderId);
             try (ResultSet rs = stmt.executeQuery()) {

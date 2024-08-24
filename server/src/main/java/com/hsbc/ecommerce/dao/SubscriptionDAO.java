@@ -10,7 +10,7 @@ import java.util.StringJoiner;
 
 public class SubscriptionDAO {
 
-    private Connection connection;
+    private final Connection connection;
 
     public SubscriptionDAO(Connection connection) {
         this.connection = connection;

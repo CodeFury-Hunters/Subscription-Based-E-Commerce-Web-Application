@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ProductLogic {
-    private ProductDAO productDAO;
+    private final ProductDAO productDAO;
 
     public ProductLogic(ProductDAO productDAO) {
         this.productDAO = productDAO;

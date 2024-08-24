@@ -1,6 +1,7 @@
 package com.hsbc.ecommerce.models;
 
 public class OrderProduct {
+    private int id;
     private int orderId;
     private int productId;  // Foreign key to Product
     private int quantity;
@@ -31,6 +32,14 @@ public class OrderProduct {
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
 
