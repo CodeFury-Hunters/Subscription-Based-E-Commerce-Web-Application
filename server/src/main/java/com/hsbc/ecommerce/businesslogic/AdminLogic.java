@@ -1,22 +1,25 @@
 package com.hsbc.ecommerce.businesslogic;
 
-import com.hsbc.ecommerce.dao.AdminDAO;
-import com.hsbc.ecommerce.dao.ProductDAO;
-import com.hsbc.ecommerce.dao.SubscriptionDAO;
+import com.hsbc.ecommerce.dao.ProductDAO.ProductCrudDAO;
+import com.hsbc.ecommerce.dao.SubscriptionsDAO.SubscriptionCrudDAO;
+import com.hsbc.ecommerce.daoImpl.AdminDAOImpl;
+import com.hsbc.ecommerce.daoImpl.ProductDAOImpl.ProductCrudDAOImpl;
+import com.hsbc.ecommerce.daoImpl.SubsDaoImpl.SubscriptionDAOImpl;
 import com.hsbc.ecommerce.models.Admin;
 import com.hsbc.ecommerce.models.Product;
 import com.hsbc.ecommerce.models.Subscription;
+import com.hsbc.ecommerce.dao.AdminDAO;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class AdminLogic {
 
-    private AdminDAO adminDAO;
-    private SubscriptionDAO subscriptionDAO;
-    private ProductDAO productDAO;
+    private final AdminDAO adminDAO;
+    private final SubscriptionCrudDAO subscriptionDAO;
+    private final ProductCrudDAO productDAO;
 
-    public AdminLogic(AdminDAO adminDAO, SubscriptionDAO subscriptionDAO,ProductDAO productDAO) {
+    public AdminLogic(AdminDAOImpl adminDAO, SubscriptionDAOImpl subscriptionDAO, ProductCrudDAOImpl productDAO) {
         this.adminDAO = adminDAO;
         this.subscriptionDAO = subscriptionDAO;
         this.productDAO = productDAO;

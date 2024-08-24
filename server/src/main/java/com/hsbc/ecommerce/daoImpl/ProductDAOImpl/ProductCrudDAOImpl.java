@@ -1,34 +1,33 @@
-package com.hsbc.ecommerce.dao;
+package com.hsbc.ecommerce.daoImpl.ProductDAOImpl;
 
+import com.hsbc.ecommerce.dao.ProductDAO.ProductCrudDAO;
 import com.hsbc.ecommerce.models.Product;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDAO {
+public class ProductCrudDAOImpl implements ProductCrudDAO {
 
-    private Connection connection;
+    private final Connection connection;
 
-    public ProductDAO(Connection connection) {
+    public ProductCrudDAOImpl(Connection connection) {
         this.connection = connection;
     }
 
-    // Create a new product
+    @Override
     public void saveProduct(Product product) throws SQLException {
+<<<<<<< HEAD:server/src/main/java/com/hsbc/ecommerce/dao/ProductDAO.java
         String sql = "INSERT INTO product (name, description, price, weekly, biWeekly, monthly, custom, is_active, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+=======
+        String sql = "INSERT INTO products (name, description, price, stock, createdAt) VALUES (?, ?, ?, ?, ?)";
+>>>>>>> d6e911ab4b1a2e222c2682d34d37a6cd36cff2dc:server/src/main/java/com/hsbc/ecommerce/daoImpl/ProductDAOImpl/ProductCrudDAOImpl.java
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, product.getName());
             stmt.setString(2, product.getDescription());
             stmt.setDouble(3, product.getPrice());
-            stmt.setBoolean(4, product.isWeekly());
-            stmt.setBoolean(5, product.isBiWeekly());
-            stmt.setBoolean(6, product.isMonthly());
-            stmt.setBoolean(7, product.isCustom());
-            stmt.setBoolean(8, product.isActive());
-            stmt.setTimestamp(9, new Timestamp(product.getCreatedAt().getTime()));
-
+            stmt.setInt(4, product.getStock());
+            stmt.setTimestamp(5, new Timestamp(product.getCreatedAt().getTime()));
             stmt.executeUpdate();
-
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     product.setId(generatedKeys.getInt(1));
@@ -37,7 +36,7 @@ public class ProductDAO {
         }
     }
 
-    // Retrieve a product by ID
+    @Override
     public Product getProductById(int id) throws SQLException {
         String sql = "SELECT * FROM product WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -51,7 +50,7 @@ public class ProductDAO {
         return null;
     }
 
-    // Retrieve all products
+    @Override
     public List<Product> getAllProducts() throws SQLException {
         List<Product> products = new ArrayList<>();
         String sql = "SELECT * FROM product";
@@ -64,25 +63,25 @@ public class ProductDAO {
         return products;
     }
 
-    // Update a product
+    @Override
     public void updateProduct(Product product) throws SQLException {
+<<<<<<< HEAD:server/src/main/java/com/hsbc/ecommerce/dao/ProductDAO.java
         String sql = "UPDATE product SET name = ?, description = ?, price = ?, weekly = ?, biWeekly = ?, monthly = ?, custom = ?, is_active = ? WHERE id = ?";
+=======
+        String sql = "UPDATE products SET name = ?, description = ?, price = ?, stock = ?, createdAt = ? WHERE id = ?";
+>>>>>>> d6e911ab4b1a2e222c2682d34d37a6cd36cff2dc:server/src/main/java/com/hsbc/ecommerce/daoImpl/ProductDAOImpl/ProductCrudDAOImpl.java
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, product.getName());
             stmt.setString(2, product.getDescription());
             stmt.setDouble(3, product.getPrice());
-            stmt.setBoolean(4, product.isWeekly());
-            stmt.setBoolean(5, product.isBiWeekly());
-            stmt.setBoolean(6, product.isMonthly());
-            stmt.setBoolean(7, product.isCustom());
-            stmt.setBoolean(8, product.isActive());
-            stmt.setInt(9, product.getId());
-
+            stmt.setInt(4, product.getStock());
+            stmt.setTimestamp(5, new Timestamp(product.getCreatedAt().getTime()));
+            stmt.setInt(6, product.getId());
             stmt.executeUpdate();
         }
     }
 
-    // Delete a product by ID
+    @Override
     public void deleteProduct(int id) throws SQLException {
         String sql = "DELETE FROM product WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -91,19 +90,14 @@ public class ProductDAO {
         }
     }
 
-    // Helper method to extract a Product object from a ResultSet
     private Product extractProductFromResultSet(ResultSet rs) throws SQLException {
         Product product = new Product();
         product.setId(rs.getInt("id"));
         product.setName(rs.getString("name"));
         product.setDescription(rs.getString("description"));
         product.setPrice(rs.getDouble("price"));
-        product.setWeekly(rs.getBoolean("weekly"));
-        product.setBiWeekly(rs.getBoolean("biWeekly"));
-        product.setMonthly(rs.getBoolean("monthly"));
-        product.setCustom(rs.getBoolean("custom"));
-        product.setActive(rs.getBoolean("is_active"));
-        product.setCreatedAt(rs.getTimestamp("created_at"));
+        product.setStock(rs.getInt("stock"));
+        product.setCreatedAt(rs.getTimestamp("createdAt"));
         return product;
     }
 }

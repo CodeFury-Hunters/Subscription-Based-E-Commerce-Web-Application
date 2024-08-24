@@ -70,7 +70,7 @@ public class OrderDAO {
 
     // Update an order
     public void updateOrder(Order order) throws SQLException {
-        String sql = "UPDATE orders SET customerId = ?, subscriptionId = ?, orderDate = ?, deliveryDate = ?, status = ?, totalAmount = ? WHERE id = ?";
+        String sql = "UPDATE orders SET customer_id = ?, subscription_id = ?, order_date = ?, delivery_date = ?, status = ?, total_amount = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, order.getCustomerId());
             stmt.setInt(2, order.getSubscriptionId());
@@ -98,7 +98,7 @@ public class OrderDAO {
 
     // Save order products
     private void saveOrderProducts(Order order) throws SQLException {
-        String sql = "INSERT INTO order_products (orderId, productId, quantity) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO order_products (order_id, product_id, quantity) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             for (OrderProduct op : order.getProducts()) {
                 stmt.setInt(1, order.getId());

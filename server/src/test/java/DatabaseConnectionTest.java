@@ -25,4 +25,8 @@ public class DatabaseConnectionTest {
             DatabaseConfig.closeConnection(connection);
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> d6e911ab4b1a2e222c2682d34d37a6cd36cff2dc

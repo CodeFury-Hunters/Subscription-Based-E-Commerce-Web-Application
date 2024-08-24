@@ -1,4 +1,5 @@
 package com.hsbc.ecommerce.models;
+
 import java.util.Date;
 import java.util.EnumSet;
 

@@ -1,15 +1,15 @@
-package com.hsbc.ecommerce.businesslogic;
+package com.hsbc.ecommerce.businesslogic.CustomerLogic;
 
-import com.hsbc.ecommerce.dao.CustomerDAO;
+import com.hsbc.ecommerce.dao.CustomerDAO.CustomerCrudDAO;
 import com.hsbc.ecommerce.models.Customer;
 
 import java.sql.SQLException;
-import java.util.List;
 
-public class CustomerLogic {
-    private CustomerDAO customerDAO;
+public class CustomerCrudLogic {
 
-    public CustomerLogic(CustomerDAO customerDAO) {
+    private CustomerCrudDAO customerDAO;
+
+    public CustomerCrudLogic(CustomerCrudDAO customerDAO) {
         this.customerDAO = customerDAO;
     }
 
@@ -17,24 +17,6 @@ public class CustomerLogic {
         // Business logic for customer registration
         try {
             customerDAO.saveCustomer(customer);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public Customer getCustomerById(int id) {
-        // Business logic for retrieving a customer by ID
-        try {
-            return customerDAO.getCustomerById(id);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public List<Customer> getAllCustomers() {
-        // Business logic for retrieving all customers
-        try {
-            return customerDAO.getAllCustomers();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
