@@ -1,10 +1,8 @@
 package com.hsbc.ecommerce.businesslogic;
-
 import com.hsbc.ecommerce.dao.OrderProductDAO;
 import com.hsbc.ecommerce.models.OrderProduct;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public class OrderProductLogic {
     private OrderProductDAO orderProductDAO;
@@ -31,21 +29,13 @@ public class OrderProductLogic {
         }
     }
 
-    public void deleteOrderProduct(int orderId, int productId) {
+    public void deleteCartProduct(int orderId, int productId) {
         // Business logic for deleting an OrderProduct entry
         try {
-            orderProductDAO.deleteOrderProduct(orderId, productId);
+            orderProductDAO.deleteOrderProduct(orderId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public List<OrderProduct> getOrderProductsByOrderId(int orderId) {
-        // Business logic for retrieving all products in a specific order
-        try {
-            return orderProductDAO.getOrderProductsByOrderId(orderId);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

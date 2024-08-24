@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Example</title>
+    <link rel="stylesheet" href="header.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="left">
+                <!-- Nav toggle button -->
+                <button id="nav-toggle" class="nav-toggle">
+                    <i class="fa">&#xf0c9;</i> <!-- Hamburger icon -->
+                </button>
+                <a href="#" class="logo-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/7997/7997064.png" alt="Logo" class="logo-icon">
+                </a>
+                <a href="mailto:support@hunters.com">
+                    <i class="fa">&#xf0e0;</i> support@hunters.com
+                </a>
+                <a href="tel:+1234567890">
+                    <i class="fa">&#xf095;</i> +123 456 7890
+                </a>
+            </div>
+            <div class="right">
+                <span id="greeting" class="greeting"></span>
+                <div id="cart-icon" class="cart-icon"></div>
+            </div>
+        </div>
+        <!-- Navigation Sidebar -->
+        <div id="nav-sidebar" class="nav-sidebar">
+            <button id="nav-close" class="nav-close">&times;</button>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">Products</a>
+                <a href="#">Orders</a>
+                <a href="#">Subscriptions</a>
+            </nav>
+            <div class="nav-bottom">
+                <a href="#">Account</a>
+                <a href="#">Help</a>
+                <a href="#">FAQ</a>
+                <button id="logout-btn">Logout</button>
+            </div>
+        </div>
+    </header>
+
+
+    <section class="hero">
+        <div class="hero-content">
+            <!-- <h1>Welcome to Our Website</h1>
+            <p>Your success is our mission</p> -->
+        </div>
+    </section>
+    
+    <script src="header.js"></script>
+</body>
+</html>

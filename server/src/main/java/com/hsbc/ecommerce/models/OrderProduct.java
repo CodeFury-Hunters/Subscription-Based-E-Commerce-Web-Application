@@ -1,12 +1,21 @@
 package com.hsbc.ecommerce.models;
 
 public class OrderProduct {
+    private int id;
     private int orderId;
     private int productId;  // Foreign key to Product
     private int quantity;
 
     public OrderProduct() {
         this.quantity = 1;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getProductId() {
