@@ -2,7 +2,6 @@ package com.hsbc.ecommerce.service.admin;
 
 import com.hsbc.ecommerce.dao.AdminDAO;
 import com.hsbc.ecommerce.models.Admin;
-import com.hsbc.ecommerce.service.admin.AdminService;
 import java.sql.SQLException;
 import java.util.List;
 

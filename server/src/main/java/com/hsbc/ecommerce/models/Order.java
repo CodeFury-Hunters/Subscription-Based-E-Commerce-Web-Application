@@ -1,7 +1,5 @@
 package com.hsbc.ecommerce.models;
 
-import com.hsbc.ecommerce.models.OrderProduct;
-
 import java.util.Date;
 import java.util.List;
 

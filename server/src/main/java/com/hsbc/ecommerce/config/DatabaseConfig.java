@@ -11,29 +11,41 @@ public class DatabaseConfig {
     private static final String USER = "hunters";
     private static final String PASSWORD = "Hunters@123";
 
-    /**
-     * Get a connection to the database.
-     *
-     * @return Connection object
-     */
-    public static Connection getConnection() throws SQLException {
-        try {
-            // Load MySQL JDBC driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    private static DatabaseConfig instance;
+    private Connection connection;
 
-        // Return the connection
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+    
+    private DatabaseConfig() throws SQLException {
+        try {
+            // Load the JDBC driver if required (depends on the JDBC version)
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Initialize the connection
+            this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+            throw new SQLException("Failed to create database connection", ex);
+        }
     }
 
-    /**
-     * Close the database connection.
-     *
-     * @param connection the connection to close
-     */
-    public static void closeConnection(Connection connection) {
+    // Step 3: Public static method to provide access to the instance
+    public static DatabaseConfig getInstance() throws SQLException {
+        if (instance == null) {
+            synchronized (DatabaseConfig.class) {
+                if (instance == null) {
+                    instance = new DatabaseConfig();
+                }
+            }
+        }
+        return instance;
+    }
+
+    // Method to get the Connection object
+    public Connection getConnection() {
+        return connection;
+    }
+
+    // Optional: Method to close the connection (not usually part of Singleton, but useful)
+    public void closeConnection() {
         if (connection != null) {
             try {
                 connection.close();

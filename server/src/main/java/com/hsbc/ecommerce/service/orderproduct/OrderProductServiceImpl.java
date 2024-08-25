@@ -1,8 +1,7 @@
-package com.hsbc.ecommerce.service.impl;
+package com.hsbc.ecommerce.service.orderproduct;
 
 import com.hsbc.ecommerce.dao.OrderProductDAO;
 import com.hsbc.ecommerce.models.OrderProduct;
-import com.hsbc.ecommerce.service.orderproduct.OrderProductService;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -8,6 +8,7 @@ public class Product {
     private String description;
     private double price;
     private Date createdAt;
+    private int quantity;
 
     // Getters and Setters
     public int getId() {
@@ -48,5 +49,13 @@ public class Product {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
