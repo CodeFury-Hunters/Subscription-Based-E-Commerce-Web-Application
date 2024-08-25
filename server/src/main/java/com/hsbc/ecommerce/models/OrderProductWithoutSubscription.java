@@ -7,7 +7,7 @@ public class OrderProductWithoutSubscription implements OrderProduct {
     private int quantity;
 
     public OrderProductWithoutSubscription() {
-        this.quantity = 1;
+        this.quantity = 0;
     }
 
     @Override

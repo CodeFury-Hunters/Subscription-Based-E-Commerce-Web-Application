@@ -9,7 +9,7 @@ public class OrderProductWithSubscription implements OrderProduct {
 
     public OrderProductWithSubscription() {
 
-        this.quantity = 1;
+        this.quantity = 0;
     }
 
     @Override
