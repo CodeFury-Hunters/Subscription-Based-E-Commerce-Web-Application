@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Registration Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('img/food.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #f8eded; /* Background color from the palette */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        .container h2 {
+            margin-bottom: 20px;
+            color: #333; /* Dark text color for readability */
+        }
+        .container input[type="text"],
+        .container input[type="password"],
+        .container input[type="email"],
+        .container input[type="tel"] {
+            width: calc(100% - 22px); /* Adjust width to account for padding and border */
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #b43f3f; /* Secondary color for borders */
+            border-radius: 4px;
+            box-sizing: border-box; /* Ensure padding and border are included in the width */
+        }
+        .container input[type="submit"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            background-color: #ff8225; /* Primary color for buttons */
+            border: none;
+            border-radius: 4px;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px; /* Ensure spacing above the button */
+        }
+        .container input[type="submit"]:hover {
+            background-color: #e67922; /* Slightly darker shade for hover effect */
+        }
+        .toggle-link {
+            margin-top: 15px;
+        }
+        .toggle-link a {
+            color: #ff8225; /* Primary color for links */
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .toggle-link a:hover {
+            text-decoration: underline;
+        }
+        .message {
+            color: #b43f3f;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="form-container"></div>
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        // Mock database using JSON
+        const users = [
+            {
+                email: "codefurry@gmail.com",
+                password: "12345",
+                first_name: "Roshan",
+                last_name: "Das",
+                address: "Patrika Nagar, Hyderabad-800001",
+                phone: "8923456789"
+            },
+            {
+                email: "nosomewhere@gmail.com",
+                password: "12345",
+                admin: true
+            }
+        ];
+
+        // Define the HTML content for login and registration forms
+        const forms = {
+            login: `
+                <h2>Login</h2>
+                <form id="login-form">
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="submit" value="Login">
+                </form>
+                <div class="toggle-link">
+                    <a onclick="showForm('register')">Don't have an account? Register here</a>
+                </div>
+            `,
+            register: `
+                <h2>Register</h2>
+                <form id="register-form">
+                    <input type="text" name="firstname" placeholder="First Name" required>
+                    <input type="text" name="lastname" placeholder="Last Name" required>
+                    <input type="text" name="address" placeholder="Address" required>
+                    <input type="tel" name="phone" placeholder="Phone Number" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                    <input type="submit" value="Register">
+                </form>
+                <div class="toggle-link">
+                    <a onclick="showForm('login')">Already have an account? Login here</a>
+                </div>
+            `
+        };
+
+        // Function to show the form based on the type
+        function showForm(formType) {
+            const formContainer = document.getElementById('form-container');
+            formContainer.innerHTML = forms[formType];
+            document.getElementById('message').innerText = ''; // Clear any previous messages
+
+            if (formType === 'login') {
+                document.getElementById('login-form').onsubmit = handleLogin;
+            } else if (formType === 'register') {
+                document.getElementById('register-form').onsubmit = handleRegister;
+            }
+        }
+
+        // Function to handle login
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = event.target.username.value;
+            const password = event.target.password.value;
+
+            const user = users.find(u => u.email === username && u.password === password);
+
+            if (user) {
+                document.getElementById('message').innerText = 'Login successful';
+                setTimeout(() => {
+                    if (user.admin) {
+                        window.location.href = 'admin_index.html';
+                    } else {
+                        window.location.href = 'user_index.html';
+                    }
+                }, 2000); // Redirect after 2 seconds
+            } else {
+                document.getElementById('message').innerText = 'Login failed';
+            }
+        }
+
+        // Function to handle registration
+        function handleRegister(event) {
+            event.preventDefault();
+            const newUser = {
+                first_name: event.target.firstname.value,
+                last_name: event.target.lastname.value,
+                address: event.target.address.value,
+                phone: event.target.phone.value,
+                email: event.target.email.value,
+                password: event.target.password.value,
+            };
+
+            const confirmPassword = event.target.confirm_password.value;
+
+            if (newUser.password !== confirmPassword) {
+                document.getElementById('message').innerText = 'Passwords do not match';
+                return;
+            }
+
+            const existingUser = users.find(u => u.email === newUser.email);
+            if (existingUser) {
+                document.getElementById('message').innerText = 'User already exists';
+                return;
+            }
+
+            users.push(newUser);
+            document.getElementById('message').innerText = 'Registration successful! Please log in.';
+            // Temporarily remember the registration details for login
+            localStorage.setItem('tempUsername', newUser.email);
+            localStorage.setItem('tempPassword', newUser.password);
+            showForm('login');
+        }
+
+        // Check if there's a temporary user to log in
+        window.onload = function() {
+            const tempUsername = localStorage.getItem('tempUsername');
+            const tempPassword = localStorage.getItem('tempPassword');
+            if (tempUsername && tempPassword) {
+                localStorage.removeItem('tempUsername');
+                localStorage.removeItem('tempPassword');
+                document.getElementById('form-container').innerHTML = `
+                    <h2>Login</h2>
+                    <form id="login-form">
+                        <input type="text" name="username" value="${tempUsername}" required>
+                        <input type="password" name="password" value="${tempPassword}" required>
+                        <input type="submit" value="Login">
+                    </form>
+                    <div class="toggle-link">
+                        <a onclick="showForm('register')">Don't have an account? Register here</a>
+                    </div>
+                `;
+                document.getElementById('login-form').onsubmit = handleLogin;
+            } else {
+                showForm('login');
+            }
+        };
+    </script>
+
+</body>
+</html>
