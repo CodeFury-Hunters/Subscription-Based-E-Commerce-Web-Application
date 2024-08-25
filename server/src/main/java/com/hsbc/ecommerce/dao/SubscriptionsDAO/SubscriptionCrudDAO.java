@@ -10,4 +10,5 @@ public interface SubscriptionCrudDAO {
     List<Subscription> getAllSubscriptions() throws SQLException;
     void updateSubscription(Subscription subscription) throws SQLException;
     void deleteSubscription(int id) throws SQLException;
+    List<Subscription> getSubscriptionsByCustomerId(int customerId) throws SQLException;
 }

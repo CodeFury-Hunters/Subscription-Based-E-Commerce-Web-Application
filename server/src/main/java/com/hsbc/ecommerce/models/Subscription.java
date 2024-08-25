@@ -15,7 +15,7 @@ public class Subscription {
     private Date createdAt;
 
     public enum SubscriptionType {
-        WEEKLY, BIWEEKLY, MONTHLY ,CUSTOM ,SINGLE
+        WEEKLY, BIWEEKLY, MONTHLY ,CUSTOM
     }
 
     public Subscription() {

@@ -1,13 +1,14 @@
 package com.hsbc.ecommerce.models;
 
+import com.hsbc.ecommerce.models.OrderProduct;
+
 import java.util.Date;
 import java.util.List;
 
 public class Order {
     private int id;
     private int customerId;       // Foreign key to Customer
-    private int subscriptionId;   // Foreign key to Subscription
-    private List<OrderProduct> products; // List of OrderProduct
+    private List<OrderProduct> orderProducts; // List of OrderProducts (both with and without subscriptions)
     private Date orderDate;
     private Date deliveryDate;
     private String status;
@@ -17,6 +18,8 @@ public class Order {
         this.orderDate = new Date();
         this.status = "pending";
     }
+
+    // Getters and Setters
 
     public int getId() {
         return id;
@@ -34,20 +37,12 @@ public class Order {
         this.customerId = customerId;
     }
 
-    public int getSubscriptionId() {
-        return subscriptionId;
+    public List<OrderProduct> getOrderProducts() {
+        return orderProducts;
     }
 
-    public void setSubscriptionId(int subscriptionId) {
-        this.subscriptionId = subscriptionId;
-    }
-
-    public List<OrderProduct> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<OrderProduct> products) {
-        this.products = products;
+    public void setOrderProducts(List<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
     }
 
     public Date getOrderDate() {

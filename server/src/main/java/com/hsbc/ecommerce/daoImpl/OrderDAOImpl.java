@@ -18,17 +18,19 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public void saveOrder(Order order) throws SQLException {
-        String sql = "INSERT INTO orders (customerId, totalAmount) VALUES ( ?, ?)";
+        String sql = "INSERT INTO orders (customerId, orderDate, deliveryDate, status, totalAmount) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, order.getCustomerId());
-            stmt.setDouble(3, order.getTotalAmount());
+            stmt.setDate(2, new java.sql.Date(order.getOrderDate().getTime()));
+            stmt.setDate(3, new java.sql.Date(order.getDeliveryDate().getTime()));
+            stmt.setString(4, order.getStatus());
+            stmt.setDouble(5, order.getTotalAmount());
             stmt.executeUpdate();
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     order.setId(generatedKeys.getInt(1));
                 }
             }
-            saveOrderProducts(order);
         }
     }
 
@@ -39,9 +41,7 @@ public class OrderDAOImpl implements OrderDAO {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    Order order = extractOrderFromResultSet(rs);
-                    order.setProducts(getOrderProducts(order.getId()));
-                    return order;
+                    return extractOrderFromResultSet(rs);
                 }
             }
         }
@@ -55,9 +55,7 @@ public class OrderDAOImpl implements OrderDAO {
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                Order order = extractOrderFromResultSet(rs);
-                order.setProducts(getOrderProducts(order.getId()));
-                orders.add(order);
+                orders.add(extractOrderFromResultSet(rs));
             }
         }
         return orders;
@@ -65,18 +63,20 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public void updateOrder(Order order) throws SQLException {
-        String sql = "UPDATE orders SET customerId = ?, totalAmount = ? WHERE id = ?";
+        String sql = "UPDATE orders SET customerId = ?, orderDate = ?, deliveryDate = ?, status = ?, totalAmount = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, order.getCustomerId());
-            stmt.setDouble(3, order.getTotalAmount());
-            stmt.setInt(4, order.getId());
+            stmt.setDate(2, new java.sql.Date(order.getOrderDate().getTime()));
+            stmt.setDate(3, new java.sql.Date(order.getDeliveryDate().getTime()));
+            stmt.setString(4, order.getStatus());
+            stmt.setDouble(5, order.getTotalAmount());
+            stmt.setInt(6, order.getId());
             stmt.executeUpdate();
         }
     }
 
     @Override
     public void deleteOrder(int id) throws SQLException {
-        deleteOrderProducts(id);
         String sql = "DELETE FROM orders WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
@@ -84,49 +84,64 @@ public class OrderDAOImpl implements OrderDAO {
         }
     }
 
-    private void saveOrderProducts(Order order) throws SQLException {
-        String sql = "INSERT INTO order_products (orderId, productId, quantity) VALUES (?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            for (OrderProduct product : order.getProducts()) {
-                stmt.setInt(1, order.getId());
-                stmt.setInt(2, product.getProductId());
-                stmt.setInt(3, product.getQuantity());
-                stmt.addBatch();
-            }
-            stmt.executeBatch();
-        }
-    }
+    @Override
+    public List<OrderProduct> getOrderProducts(int orderId) throws SQLException {
+        List<OrderProduct> orderProducts = new ArrayList<>();
+        String sql = "SELECT * FROM OrderProducts WHERE orderId = ?";
 
-    private void deleteOrderProducts(int orderId) throws SQLException {
-        String sql = "DELETE FROM order_products WHERE orderId = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, orderId);
-            stmt.executeUpdate();
-        }
-    }
-
-    private List<OrderProduct> getOrderProducts(int orderId) throws SQLException {
-        List<OrderProduct> products = new ArrayList<>();
-        String sql = "SELECT * FROM order_products WHERE orderId = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, orderId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    OrderProduct product = new OrderProduct();
-                    product.setProductId(rs.getInt("productId"));
-                    product.setQuantity(rs.getInt("quantity"));
-                    products.add(product);
+                    OrderProduct orderProduct = extractOrderProductFromResultSet(rs);
+                    orderProducts.add(orderProduct);
                 }
             }
         }
-        return products;
+        return orderProducts;
+    }
+
+    @Override
+    public List<Order> getOrdersByCustomerId(int customerId) throws SQLException {
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT * FROM orders WHERE customerId = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, customerId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    orders.add(extractOrderFromResultSet(rs));
+                }
+            }
+        }
+        return orders;
     }
 
     private Order extractOrderFromResultSet(ResultSet rs) throws SQLException {
         Order order = new Order();
         order.setId(rs.getInt("id"));
         order.setCustomerId(rs.getInt("customerId"));
+        order.setOrderDate(rs.getDate("orderDate"));
+        order.setDeliveryDate(rs.getDate("deliveryDate"));
+        order.setStatus(rs.getString("status"));
         order.setTotalAmount(rs.getDouble("totalAmount"));
+        // Note: Handle subProducts and withoutSubProducts if needed
         return order;
+    }
+
+    private OrderProduct extractOrderProductFromResultSet(ResultSet rs) throws SQLException {
+        int id = rs.getInt("id");
+        int orderId = rs.getInt("orderId");
+        int productId = rs.getInt("productId");
+        int quantity = rs.getInt("quantity");
+        int subscriptionId = rs.getInt("subscriptionId");
+
+        OrderProduct orderProduct = new OrderProduct();
+        orderProduct.setId(id);
+        orderProduct.setOrderId(orderId);
+        orderProduct.setProductId(productId);
+        orderProduct.setQuantity(quantity);
+        orderProduct.setSubscriptionId(subscriptionId);
+
+        return orderProduct;
     }
 }

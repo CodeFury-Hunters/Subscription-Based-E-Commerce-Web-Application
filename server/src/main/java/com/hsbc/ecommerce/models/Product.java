@@ -7,21 +7,7 @@ public class Product {
     private String name;
     private String description;
     private double price;
-    private int stock;
     private Date createdAt;
-
-    // Constructors
-    public Product() {
-    }
-
-    public Product(int id, String name, String description, double price, int stock, Date createdAt) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.stock = stock;
-        this.createdAt = createdAt;
-    }
 
     // Getters and Setters
     public int getId() {
@@ -54,14 +40,6 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
     }
 
     public Date getCreatedAt() {
