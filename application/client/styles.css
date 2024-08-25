@@ -1,0 +1,434 @@
+/* General Layout */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #F8EDED;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    background-color: white;
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header h1 {
+    font-size: 2rem;
+    color: #B43F3F;
+    margin: 0;
+}
+
+.header img {
+    width: 50px;
+    height: 50px;
+}
+
+/* Cart Page Layout */
+.cart-page {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 0;
+}
+
+.cart-items-container, .cart-summary {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cart-items-container {
+    flex: 3;
+    margin-right: 20px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-item img {
+    width: 100px;
+    margin-right: 20px;
+}
+
+.item-details {
+    flex: 2;
+    max-width: 300px; /* Ensure consistent width */
+}
+
+.item-details h2 {
+    font-size: 1.2rem;
+    color: #173B45;
+    margin: 0;
+}
+
+.item-details .item-name {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #173B45;
+}
+
+.item-details p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-btn {
+    background: #FF8225;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0 5px;
+    border-radius: 4px;
+}
+
+.quantity {
+    font-size: 1rem;
+    margin: 0 10px;
+}
+
+.item-total {
+    flex: 1;
+    text-align: right;
+    font-size: 1.2rem;
+    color: #B43F3F;
+}
+
+.remove-item-btn {
+    background: #B43F3F;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: 20px;
+}
+
+/* Cart Summary */
+/* Add this to your styles.css to ensure the cart summary is visible */
+.cart-summary {
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+}
+
+.summary-details p {
+    margin: 5px 0;
+}
+
+.proceed-btn {
+    background-color: #FF8225; /* Or your preferred color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.proceed-btn:hover {
+    background-color: #B43F3F; /* Or your preferred hover color */
+}
+
+/* .cart-summary {
+    flex: 1;
+    padding: 20px;
+}
+
+.cart-summary h2 {
+    font-size: 1.5rem;
+    color: #B43F3F;
+    margin-bottom: 20px;
+}
+
+.summary-details p {
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #173B45;
+}
+
+.summary-details h3 {
+    margin-top: 15px;
+    font-size: 1.5rem;
+    color: #B43F3F;
+} */
+
+.promo-code-section {
+    display: flex;
+    margin-top: 20px;
+}
+
+#promo-code-input {
+    flex: 1;
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.promo-code-section button {
+    background: #FF8225;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.proceed-btn {
+    width: 100%;
+    background: #173B45;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1.2rem;
+}
+
+/* Checkout Page Layout */
+.checkout-page {
+    padding: 40px 0;
+}
+
+.billing-details {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.billing-details h2 {
+    font-size: 1.5rem;
+    color: #B43F3F;
+    margin-bottom: 20px;
+}
+
+.billing-details .form-group {
+    margin-bottom: 15px;
+}
+
+.billing-details label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: #173B45;
+}
+
+.billing-details input, .billing-details textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.billing-details textarea {
+    height: 60px;
+}
+
+.billing-details .form-group {
+    margin-bottom: 15px;
+}
+
+.order-item-detail {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+}
+
+.order-item-image img {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.order-item-info {
+    flex: 1;
+}
+
+.order-item-name {
+    font-weight: bold; 
+    margin-bottom: 10px;  
+    font-size: 16px;
+}
+
+.order-item-qty,
+.order-item-total {
+    margin: 20px;
+    padding: 5px 0; /* Add padding for spacing between lines */
+    font-size: 14px;
+}
+
+.order-item-qty {
+    margin-left: 20px; /* Space between item name and quantity */
+}
+
+/* Payment Page Layout */
+.payment-page {
+    display: flex;
+    flex-direction: column;
+    padding: 40px 0;
+}
+
+.order-summary, .payment-form, .payment-options {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.order-summary h2, .payment-form h2, .payment-options h2 {
+    font-size: 1.5rem;
+    color: #B43F3F;
+    margin-bottom: 20px;
+}
+
+.order-item, .summary-details, .form-group {
+    margin-bottom: 15px;
+}
+
+.order-item p, .summary-details p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #173B45;
+}
+
+.summary-details h3 {
+    margin-top: 15px;
+    font-size: 1.5rem;
+    color: #B43F3F;
+}
+
+/* Payment Form Styling */
+.payment-form {
+    width: 100%; /* Ensures it takes the full width */
+}
+
+.payment-form h2 {
+    font-size: 1.5rem;
+    color: #B43F3F;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: #173B45;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.form-group textarea {
+    height: 60px;
+}
+
+.submit-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 1.2rem;
+    color: white;
+    background: #173B45;
+    border: none;
+    cursor: pointer;
+}
+
+/* Payment Options Styling */
+.payment-options {
+    margin-top: 20px;
+}
+
+.payment-options .option {
+    margin-bottom: 10px;
+}
+
+.payment-options input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* Footer */
+.footer {
+    background-color: #B43F3F;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: relative; /* Ensure it stays at the bottom of the page */
+    margin-top: 20px; /* Add some spacing above the footer */
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* Spacing Below Cart */
+.page-spacing {
+    height: 150px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .cart-page {
+        flex-direction: column;
+    }
+
+    .cart-items-container {
+        margin-right: 0;
+    }
+
+    .cart-summary {
+        margin-top: 20px;
+    }
+}

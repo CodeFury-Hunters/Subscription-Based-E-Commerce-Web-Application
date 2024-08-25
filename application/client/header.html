@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Options</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        /* Add some basic styles for the header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #F8EDED; /* Background color from your color scheme */
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .cart-icon-container {
+            position: relative;
+            cursor: pointer;
+        }
+        .cart-icon {
+            width: 30px;
+            height: 30px;
+        }
+        .cart-popup {
+            display: none; /* Hidden by default, shown on click */
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #FFF; /* White background for the popup */
+            border: 1px solid #B43F3F; /* Border color from your color scheme */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            width: 250px;
+        }
+        .cart-popup-buttons button {
+            background-color: #FF8225; /* Button background color from your color scheme */
+            color: #FFF; /* Button text color */
+            border: none;
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Meal Options</h1>
+        <!-- Cart Icon -->
+        <div class="cart-icon-container">
+            <img src="cart-icon.png" alt="Cart Icon" class="cart-icon" onclick="toggleCartPopup()">
+            <span class="cart-count">0</span>
+            <div class="cart-popup">
+                <h3>Your Cart</h3>
+                <div class="cart-popup-items"></div>
+                <div class="cart-popup-buttons">
+                    <button onclick="goToCart()">Go to Cart</button>
+                    <button onclick="proceedToCheckout()">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <script>
+        function toggleCartPopup() {
+            const popup = document.querySelector('.cart-popup');
+            popup.style.display = (popup.style.display === 'block') ? 'none' : 'block';
+        }
+        
+        function goToCart() {
+            window.location.href = 'cart.html';
+        }
+        
+        function proceedToCheckout() {
+            window.location.href = 'checkout.html';
+        }
+        // include-header.js
+document.addEventListener('DOMContentLoaded', function() {
+    const headerContainer = document.getElementById('header-container');
+
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+            headerContainer.innerHTML = data;
+        })
+        .catch(error => console.error('Error loading header:', error));
+});
+
+    </script>
+</body>
+</html>
+

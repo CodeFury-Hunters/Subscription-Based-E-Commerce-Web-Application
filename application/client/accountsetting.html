@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8eded;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #b43f3f;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar nav ul li {
+            margin-bottom: 20px;
+        }
+
+        .sidebar nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .sidebar nav ul li a.active {
+            color: #ff8225;
+            font-weight: bold;
+        }
+
+        .main-content {
+    flex-grow: 1;
+    padding: 40px;
+    background-color: #fff;
+    background-image: url('img/food1.png');
+    background-size: cover;
+    background-position: center;
+}
+
+
+        .main-content h1 {
+            margin-bottom: 20px;
+            color: #b43f3f;
+        }
+
+        .main-content section {
+            margin-bottom: 40px;
+        }
+
+        .main-content section h2 {
+            margin-bottom: 10px;
+            color: #b43f3f;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"],
+        .form-group input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .save-btn,
+        .change-plan-btn,
+        .update-payment-btn,
+        .billing-history-btn,
+        .delete-account-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff8225;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .save-btn:hover,
+        .change-plan-btn:hover,
+        .update-payment-btn:hover,
+        .billing-history-btn:hover,
+        .delete-account-btn:hover {
+            background-color: #b43f3f;
+        }
+
+        .delete-account-btn {
+            background-color: #b43f3f;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .modal-content button {
+            margin: 10px;
+        }
+
+        .toggle-password {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #ff8225;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .toggle-password:hover {
+            background-color: #b43f3f;
+        }
+
+        /* Footer Section Styles */
+footer {
+    background-color: #B43F3F;
+    color: #FFF;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 20px;
+}
+
+.quick-links, .social-media {
+    flex: 1;
+}
+
+.quick-links h3, .social-media h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.quick-links ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.quick-links ul li {
+    margin-bottom: 10px;
+}
+
+.quick-links ul li a {
+    color: #FFF;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.quick-links ul li a:hover {
+    color: #FF8225;
+}
+
+.social-media .social-icon {
+    display: inline-block;
+    color: #FFF;
+    text-decoration: none;
+    margin: 0 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #FF8225;
+    transition: background-color 0.3s;
+}
+
+.social-media .social-icon:hover {
+    background-color: #B43F3F;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Orders</a></li>
+                    <li><a href="#">Subscriptions</a></li>
+                    <li><a href="#" class="active">Account Settings</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <h1>Account Settings</h1>
+            <section class="profile-info">
+                <h2>Profile Information</h2>
+                <div class="profile-picture">
+                    <label for="profile-picture">Profile Picture:</label>
+                    <input type="file" id="profile-picture">
+                </div>
+                <div class="form-group">
+                    <label for="full-name">Full Name:</label>
+                    <input type="text" id="full-name" value="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" value="john.doe@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" value="123-456-7890">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" placeholder="Street, City, State, ZIP">
+                </div>
+                <button class="save-btn">Save Changes</button>
+            </section>
+
+            <section class="security-settings">
+                <h2>Security Settings</h2>
+                <div class="form-group">
+                    <label for="current-password">Current Password:</label>
+                    <input type="password" id="current-password">
+                </div>
+                <div class="form-group">
+                    <label for="new-password">New Password:</label>
+                    <input type="password" id="new-password">
+                    <button class="toggle-password">Show</button>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm New Password:</label>
+                    <input type="password" id="confirm-password">
+                    <button class="toggle-password">Show</button>
+                </div>
+                <button class="save-btn">Save Changes</button>
+            </section>
+
+            <section class="notification-preferences">
+                <h2>Notification Preferences</h2>
+                <div class="form-group">
+                    <input type="checkbox" id="email-notifications" checked>
+                    <label for="email-notifications">Email Notifications</label>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" id="sms-notifications">
+                    <label for="sms-notifications">SMS Notifications</label>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" id="push-notifications" checked>
+                    <label for="push-notifications">Push Notifications</label>
+                </div>
+                <button class="save-btn">Save Changes</button>
+            </section>
+
+            <section class="subscription-details">
+                <h2>Subscription Details</h2>
+                <p>Current Plan: <strong>Premium Plan</strong></p>
+                <button class="change-plan-btn">Change Plan</button>
+                <p>Payment Method: <strong>Credit Card</strong></p>
+                <button class="update-payment-btn">Update Payment Method</button>
+                <button class="billing-history-btn">View Billing History</button>
+            </section>
+
+            <section class="delete-account">
+                <h2>Delete Account</h2>
+                <button class="delete-account-btn">Delete Account</button>
+            </section>
+        </main>
+    </div>
+
+    <div class="modal" id="delete-modal">
+        <div class="modal-content">
+            <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+            <button class="cancel-btn">Cancel</button>
+            <button class="confirm-delete-btn">Delete</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="quick-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Terms and Conditions</a></li>
+                    <li><a href="#">Cancellation and Refund Policy</a></li>
+                </ul>
+            </div>
+            <div class="social-media">
+                <h3>Follow Us</h3>
+                <a href="https://www.instagram.com" class="social-icon instagram" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <a href="https://www.facebook.com" class="social-icon facebook" target="_blank" rel="noopener noreferrer">Facebook</a>
+                <!-- Add more social media links as needed -->
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2024 Our Kitchen Pvt. Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+            togglePasswordButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const input = this.previousElementSibling;
+                    const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                    input.setAttribute('type', type);
+                    this.textContent = type === 'password' ? 'Show' : 'Hide';
+                });
+            });
+
+            const deleteAccountButton = document.querySelector('.delete-account-btn');
+            const deleteModal = document.getElementById('delete-modal');
+            const cancelBtn = deleteModal.querySelector('.cancel-btn');
+            const confirmDeleteBtn = deleteModal.querySelector('.confirm-delete-btn');
+
+            deleteAccountButton.addEventListener('click', function () {
+                deleteModal.style.display = 'flex';
+            });
+
+            cancelBtn.addEventListener('click', function () {
+                deleteModal.style.display = 'none';
+            });
+
+            confirmDeleteBtn.addEventListener('click', function () {
+                alert('Account deleted.');
+                deleteModal.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

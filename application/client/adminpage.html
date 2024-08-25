@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Options</title>
+    <style>
+        /* Existing styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8eded;
+            background-image: url('food1.png');
+            background-size: cover;
+            background-position: center;
+            color: #3f173b;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #b43f3f;
+            margin-bottom: 40px;
+        }
+
+        .section {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #b43f3f;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .meal-items {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .meal-item {
+            background-color: #fff;
+            padding: 15px;
+            margin: 10px;
+            border: 1px solid #ff8225;
+            border-radius: 5px;
+            text-align: center;
+            width: calc(25% - 20px);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .meal-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .quick-view-btn {
+            background-color: #ff8225;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .quick-view-btn:hover {
+            background-color: #b43f3f;
+        }
+
+        /* New styles for the kebab menu */
+    /* New styles for the kebab menu */
+    .kebab-menu {
+    position: absolute;
+    top: 10px;
+    right: 5px; /* Adjusted to move the kebab menu further right */
+    cursor: pointer;
+    padding: 5px;
+}
+
+.kebab-menu .menu-icon {
+    font-size: 24px;
+    color: #3f173b;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 35px;
+    background-color: #fff;
+    border: 1px solid #ff8225;
+    border-radius: 5px;
+    z-index: 1;
+    padding: 10px 0; /* Adjusted padding for dropdown */
+}
+
+.dropdown-content a {
+    color: #3f173b;
+    padding: 10px 20px; /* Increased padding within dropdown items */
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #ff8225;
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-content a:hover {
+    background-color: #ff8225;
+    color: #fff;
+}
+
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #ff8325;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .product-container {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .product-image {
+            flex: 1;
+            max-width: 50%;
+        }
+
+        .product-image img {
+            width: 80%;
+            border-radius: 8px;
+        }
+
+        .product-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .product h2 {
+            color: #ff8225;
+            margin-top: 0;
+        }
+
+        .product select,
+        .product input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #e23030;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .product button {
+            background-color: #ff8225;
+            color: #ffffff;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .rating {
+            color: #ff8225;
+            margin-bottom: 10px;
+        }
+
+        #custom-dates {
+            display: none;
+            margin-top: 15px;
+        }
+
+        #custom-dates label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        #custom-dates input {
+            width: calc(50% - 5px);
+            display: inline-block;
+        }
+
+        #custom-dates .date-input {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Meal Options</h1>
+
+        <div id="meal-sections">
+            <!-- Meal sections will be dynamically inserted here -->
+        </div>
+
+        <!-- Quick View Modal -->
+        <div id="quick-view-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeQuickView()">&times;</span>
+                <div class="product-container">
+                    <div class="product-image">
+                        <img id="modal-image" src="" alt="">
+                    </div>
+                    <div class="product-details">
+                        <div class="product">
+                            <h2 id="modal-heading"></h2>
+                            <p class="rating">★★★★☆</p>
+                            <p id="modal-price">Rs. 70</p>
+                            <select id="meal-type">
+                                <option value="breakfast">Breakfast</option>
+                                <option value="Lunch">Lunch</option>
+                                <option value="Dinner">Dinner</option>
+                                <option value="option">option</option>
+                            </select>
+                            <select id="meal-plan" onchange="toggleCustomDates()">
+                                <option value="SINGLE-DAY">SINGLE-DAY</option>
+                                <option value="WEEKLY">WEEKLY</option>
+                                <option value="MONTHLY">MONTHLY</option>
+                                <option value="BI-WEEKLY">BI-WEEKLY</option>
+                                <option value="CUSTOM">CUSTOM</option>
+                            </select>
+                            <div id="custom-dates">
+                                <label for="start-date">Start Date:</label>
+                                <input type="date" id="start-date" name="start-date">
+                                
+                                <label for="end-date">End Date:</label>
+                                <input type="date" id="end-date" name="end-date">
+                            </div>
+                            <p>Meal Quantity</p>
+                            <input type="number" min="1">
+                            <button onclick="addToCart()">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Meal Modal -->
+        <div id="edit-meal-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeEditMeal()">&times;</span>
+                <div class="product-container">
+                    <div class="product-image">
+                        <img id="edit-modal-image" src="" alt="">
+                    </div>
+                    <div class="product-details">
+                        <div class="product">
+                            <h2>Edit Meal</h2>
+                            <input type="text" id="edit-meal-name" placeholder="Meal Name">
+                            <input type="number" id="edit-meal-price" placeholder="Price">
+                            <input type="file" id="edit-meal-image">
+                            <button onclick="saveMealChanges()">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // JavaScript for the meal options and modals
+        const mealData = {
+            "Breakfast": [
+                { name: "Dosa", image: "images/Dosa.jpg", price: 70 },
+                { name: "Idli", image: "images/idli.jpg", price: 50 },
+                { name: "Poha", image: "images/poha.jpg", price: 30 },
+                { name: "Breakfast Combo", image: "images/breakfast_combo.jpg", price: 100 },
+            ],
+            "Meal": [
+                { name: "Rajma Chawal", image: "images/Rajma_Chawal.jpg", price: 120 },
+                { name: "Biryani", image: "images/biriyani.jpg", price: 120 },
+                { name: "Veg Thali", image: "images/vegthali.jpg", price: 150 },
+                { name: "Non-Veg Thali", image: "images/Non-veg Thali.jpg", price: 200 },
+            ],
+            "Sweet": [
+                { name: "Ladoo", image: "images/Ladoo.jpg", price: 40 },
+                { name: "Halwa", image: "images/halwa.jpg", price: 60 },
+                { name: "Gulab Jamun", image: "images/gulabjamun.jpg", price: 90 },
+                { name: "Kaju Katli", image: "images/kajukatli.jpg", price: 70 },
+            ]
+        };
+        // Load meals into the section
+        window.onload = function() {
+            const mealSections = document.getElementById("meal-sections");
+            for (const section in mealData) {
+                const sectionDiv = document.createElement("div");
+                sectionDiv.classList.add("section");
+                sectionDiv.innerHTML = <h2>${section}</h2>;
+                const mealItemsDiv = document.createElement("div");
+                mealItemsDiv.classList.add("meal-items");
+                mealData[section].forEach((meal, index) => {
+                    const mealItemDiv = document.createElement("div");
+                    mealItemDiv.classList.add("meal-item");
+                    mealItemDiv.innerHTML = `
+                        <img src="${meal.image}" alt="${meal.name}">
+                        <div class="kebab-menu">
+                            <span class="menu-icon">&#x22EE;</span>
+                            <div class="dropdown-content">
+                                <a href="#" onclick="editMeal('${section}', ${index})">Update</a>
+                                <a href="#" onclick="confirmDelete('${section}', ${index})">Delete</a>
+                            </div>
+                        </div>
+                        <button class="quick-view-btn" onclick="quickView('${section}', ${index})">Quick View</button>
+                    `;
+                    mealItemsDiv.appendChild(mealItemDiv);
+                });
+                sectionDiv.appendChild(mealItemsDiv);
+                mealSections.appendChild(sectionDiv);
+            }
+
+            // Add event listener for kebab menu toggle
+            document.querySelectorAll('.kebab-menu .menu-icon').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    this.nextElementSibling.style.display = 
+                        this.nextElementSibling.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+        };
+
+        function quickView(section, index) {
+            const meal = mealData[section][index];
+            document.getElementById("modal-image").src = meal.image;
+            document.getElementById("modal-heading").innerText = meal.name;
+            document.getElementById("modal-price").innerText = Rs. ${meal.price};
+            document.getElementById("quick-view-modal").style.display = "block";
+        }
+
+        function closeQuickView() {
+            document.getElementById("quick-view-modal").style.display = "none";
+        }
+
+        function addToCart() {
+            alert('Added to cart!');
+        }
+
+        function toggleCustomDates() {
+            const mealPlan = document.getElementById('meal-plan').value;
+            const customDates = document.getElementById('custom-dates');
+            customDates.style.display = mealPlan === 'CUSTOM' ? 'block' : 'none';
+        }
+
+        function confirmDelete(section, index) {
+            const mealName = mealData[section][index].name;
+            if (confirm(Are you sure you want to delete ${mealName}?)) {
+                deleteMeal(section, index);
+            }
+        }
+
+        function deleteMeal(section, index) {
+            mealData[section].splice(index, 1);
+            // Reload the page to reflect the changes
+            location.reload();
+        }
+
+        function editMeal(section, index) {
+            const meal = mealData[section][index];
+            document.getElementById("edit-modal-image").src = meal.image;
+            document.getElementById("edit-meal-name").value = meal.name;
+            document.getElementById("edit-meal-price").value = meal.price;
+            document.getElementById("edit-meal-modal").style.display = "block";
+        }
+
+        function closeEditMeal() {
+            document.getElementById("edit-meal-modal").style.display = "none";
+        }
+
+        function saveMealChanges() {
+            const name = document.getElementById("edit-meal-name").value;
+            const price = document.getElementById("edit-meal-price").value;
+            const image = document.getElementById("edit-meal-image").files[0];
+            if (name && price && image) {
+                alert(Meal updated! Name: ${name}, Price: Rs. ${price});
+                // Add your logic here to update the meal data
+                closeEditMeal();
+                // Reload the page to reflect the changes
+                location.reload();
+            } else {
+                alert("Please fill in all fields.");
+            }
+        }
+    </script>
+</body>
+</html>
