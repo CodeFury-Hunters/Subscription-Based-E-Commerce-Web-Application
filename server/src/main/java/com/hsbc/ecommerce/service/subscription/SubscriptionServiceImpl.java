@@ -2,6 +2,7 @@ package com.hsbc.ecommerce.service.subscription;
 
 import com.hsbc.ecommerce.dao.SubscriptionsDAO.SubscriptionCrudDAO;
 import com.hsbc.ecommerce.dao.SubscriptionsDAO.SubscriptionManageDAO;
+import com.hsbc.ecommerce.models.OrderProduct;
 import com.hsbc.ecommerce.models.Subscription;
 
 import java.sql.SQLException;
@@ -55,6 +56,11 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     @Override
     public List<Subscription> getSubscriptionsByCustomerId(int customerId) throws SQLException {
         return subscriptionCrudDAO.getSubscriptionsByCustomerId(customerId);
+    }
+
+    @Override
+    public List<OrderProduct> getDailyDeliveryList() throws SQLException {
+        return subscriptionCrudDAO.getDailyDeliveryList();
     }
 }
 

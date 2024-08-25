@@ -1,5 +1,6 @@
 package com.hsbc.ecommerce.service.subscription;
 
+import com.hsbc.ecommerce.models.OrderProduct;
 import com.hsbc.ecommerce.models.Subscription;
 
 import java.sql.SQLException;
@@ -14,5 +15,6 @@ public interface SubscriptionService {
     void activateSubscription(int subscriptionId) throws SQLException;
     void deactivateSubscription(int subscriptionId) throws SQLException;
     public List<Subscription> getSubscriptionsByCustomerId(int customerId) throws SQLException;
+    List<OrderProduct> getDailyDeliveryList() throws SQLException;
 }
 

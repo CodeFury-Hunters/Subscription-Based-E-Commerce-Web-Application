@@ -1,6 +1,7 @@
 package com.hsbc.ecommerce.daoImpl.subscriptiondaoimpl;
 
 import com.hsbc.ecommerce.dao.SubscriptionsDAO.SubscriptionCrudDAO;
+import com.hsbc.ecommerce.models.OrderProduct;
 import com.hsbc.ecommerce.models.Subscription;
 import java.sql.*;
 import java.util.ArrayList;
@@ -133,4 +134,29 @@ public class SubscriptionDAOImpl implements SubscriptionCrudDAO {
         }
         return types;
     }
+
+    @Override
+    public List<OrderProduct> getDailyDeliveryList() throws SQLException {
+        List<OrderProduct> orderProducts = new ArrayList<>();
+        String sql = "SELECT op.* " +
+                "FROM order_products op " +
+                "JOIN subscriptions s ON op.subscriptionId = s.id " +
+                "WHERE CURRENT_DATE BETWEEN s.startDate AND s.endDate";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet rs = statement.executeQuery()) {
+
+            while (rs.next()) {
+                OrderProduct orderProduct = new OrderProduct();
+                orderProduct.setId(rs.getInt("id"));
+                orderProduct.setOrderId(rs.getInt("orderId"));
+                orderProduct.setProductId(rs.getInt("productId"));
+                orderProduct.setQuantity(rs.getInt("quantity"));
+                orderProduct.setSubscriptionId(rs.getInt("subscriptionId"));
+                orderProducts.add(orderProduct);
+            }
+        }
+        return orderProducts;
+    }
+
 }
