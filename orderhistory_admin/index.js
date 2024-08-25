@@ -131,5 +131,16 @@ const newOrders = [
 
 // Add the new orders at different intervals
 newOrders.forEach((order, index) => {
-    setTimeout(() => addOrder(order), index * 3000); // Add orders every 3 seconds
+    setTimeout(() => addOrder(order), index * 3000); 
 });
+function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    if (sidebar.style.left === "-250px") {
+        sidebar.style.left = "0";
+        overlay.style.display = "block";
+    } else {
+        sidebar.style.left = "-250px";
+        overlay.style.display = "none";
+    }
+}
