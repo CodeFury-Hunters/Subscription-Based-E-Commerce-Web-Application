@@ -1,4 +1,8 @@
 # E-Commerce Application - 
+# Client-side Technologies:
+- **HTML**
+- **CSS**
+- **JAVASCRIPT**
 # Server-Side Setup
 
 ## Overview
@@ -17,10 +21,10 @@ Before running the server, ensure you have the following installed:
 
 The server-side of the application follows a layered architecture:
 
-- **Controller Layer**: Manages HTTP requests and responses.
 - **Service Layer**: Contains business logic.
 - **DAO Layer**: Handles data access and interactions with the database.
 - **Model Layer**: Contains the entities representing the database tables.
+- **Junit**: For Testing
 
 ## Configuration
 
