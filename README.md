@@ -34,11 +34,10 @@ The server-side of the application follows a layered architecture:
      ```
 
 2. **Set Up Database Credentials**:
-   - Update the `src/main/resources/application.properties` file with your MySQL database credentials:
+   - MySQL database credentials:
      ```properties
-     spring.datasource.url=jdbc:mysql://localhost:3306/ecommerce_db
-     spring.datasource.username=hunters
-     spring.datasource.password=Hunters@123
+     username=hunters
+     password=Hunters@123
      ```
 
 ### 2. Clone the Project
