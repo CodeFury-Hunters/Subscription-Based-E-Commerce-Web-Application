@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Options</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8eded;
+            background-image: url('food1.png');
+            background-size: cover;
+            background-position: center;
+            color: #3f173b;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #b43f3f;
+            margin-bottom: 40px;
+        }
+
+        .cart-icon-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        .cart-icon {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        .cart-popup {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            width: 250px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            display: none;
+            z-index: 100;
+            border-radius: 5px;
+        }
+
+        .cart-popup h3 {
+            margin: 0;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #b43f3f;
+        }
+
+        .cart-popup-items {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+
+        .cart-popup-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .cart-popup-item img {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .cart-popup-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .cart-popup-buttons button {
+            padding: 8px 12px;
+            border: none;
+            background-color: #ff8225;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cart-popup-buttons button:hover {
+            background-color: #b43f3f;
+        }
+
+        .section {
+            width: 100%;
+            {% comment %} max-width: 900px; {% endcomment %}
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #b43f3f;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .meal-items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Center the cards horizontally */
+        }
+        
+        .meal-item {
+            background-color: #fff;
+            padding: 15px;
+            margin: 10px;
+            border: 1px solid #ff8225;
+            border-radius: 5px;
+            text-align: center;
+            width: calc(25% - 20px); /* Adjust width according to the number of items per row */
+            box-sizing: border-box;
+            /* Optional: add box-shadow for a more defined look */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .meal-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+
+        .quick-view-btn {
+            background-color: #ff8225;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .quick-view-btn:hover {
+            background-color: #b43f3f;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #ff8325;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .product-container {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .product-image {
+            flex: 1;
+            max-width: 50%;
+        }
+
+        .product-image img {
+            width: 80%;
+            border-radius: 8px;
+        }
+
+        .product-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .product h2 {
+            color: #ff8225;
+            margin-top: 0;
+        }
+
+        .product select,
+        .product input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #e23030;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .product button {
+            background-color: #ff8225;
+            color: #ffffff;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .rating {
+            color: #ff8225;
+            margin-bottom: 10px;
+        }
+
+        #custom-dates {
+            display: none;
+            margin-top: 15px;
+        }
+
+        #custom-dates label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        #custom-dates input {
+            width: calc(50% - 5px);
+            display: inline-block;
+        }
+
+        #custom-dates .date-input {
+            margin-right: 10px;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8eded;
+            background-image: url('food1.png');
+            background-size: cover;
+            background-position: center;
+            color: #3f173b;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #b43f3f;
+            margin-bottom: 40px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #B43F3F; /* Background color from your color scheme */
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-toggle {
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #FFF; /* Text color for the menu toggle */
+        }
+
+        .logo img {
+            height: 50px; /* Adjust logo size as needed */
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            margin-left: auto; 
+        }
+
+        .cart-icon-container {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-icon- {
+            width: 30px;
+            height: 30px;
+            align-item
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        .cart-popup {
+            display: none; /* Hidden by default */
+            position: absolute;
+            top: 50px;
+            right: 0;
+            width: 250px;
+            background-color: #FFF; /* White background for the popup */
+            border: 1px solid #B43F3F; /* Border color from your color scheme */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            z-index: 100;
+            border-radius: 5px;
+        }
+
+        .cart-popup h3 {
+            margin: 0;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #b43f3f;
+        }
+
+        .cart-popup-items {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+
+        .cart-popup-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .cart-popup-item img {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .cart-popup-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .cart-popup-buttons button {
+            background-color: #FF8225; /* Button background color from your color scheme */
+            color: #FFF; /* Button text color */
+            border: none;
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .cart-popup-buttons button:hover {
+            background-color: #B43F3F; /* Button hover color from your color scheme */
+        }
+
+/* Footer Section Styles */
+footer {
+    background-color: #B43F3F;
+    color: #FFF;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 20px;
+}
+
+.quick-links, .social-media {
+    flex: 1;
+}
+
+.quick-links h3, .social-media h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.quick-links ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.quick-links ul li {
+    margin-bottom: 10px;
+}
+
+.quick-links ul li a {
+    color: #FFF;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.quick-links ul li a:hover {
+    color: #FF8225;
+}
+
+.social-media .social-icon {
+    display: inline-block;
+    color: #FFF;
+    text-decoration: none;
+    margin: 0 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #FF8225;
+    transition: background-color 0.3s;
+}
+
+.social-media .social-icon:hover {
+    background-color: #B43F3F;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+/* Side Navbar Popup */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background-color: #FF8225;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+    z-index: 5;
+}
+
+.sidebar a {
+    color: #FFF;
+    text-decoration: none;
+    display: block;
+    padding: 10px 20px;
+    border-bottom: 1px solid #B43F3F;
+    transition: background-color 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #B43F3F;
+}
+
+.closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 4;
+}
+
+       
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+            <div class="logo">
+                <img src="img/logo.png" alt="Logo">
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="cart-icon-container">
+                <img src="cart-icon.png" alt="Cart Icon" class="cart-icon" onclick="toggleCartPopup()">
+                <span class="cart-count">0</span>
+                <div class="cart-popup">
+                    <h3>Your Cart</h3>
+                    <div class="cart-popup-items"></div>
+                    <div class="cart-popup-buttons">
+                        <button onclick="goToCart()">Go to Cart</button>
+                        <button onclick="proceedToCheckout()">Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </header>
+    
+    
+    <div class="container">
+    
+
+        <div id="meal-sections">
+            <!-- Meal sections will be dynamically inserted here -->
+        </div>
+
+        <div id="quick-view-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeQuickView()">&times;</span>
+                <div class="product-container">
+                    <div class="product-image">
+                        <img id="modal-image" src="" alt="">
+                    </div>
+                    <div class="product-details">
+                        <div class="product">
+                            <h2 id="modal-heading"></h2>
+                            <p class="rating">★★★★☆</p>
+                            <p id="modal-price">Rs. 70</p>
+                            <select id="meal-type">
+                                <option value="breakfast">Breakfast</option>
+                                <option value="meal">Meal</option>
+                                <option value="sweet">Sweet</option>
+                            </select>
+                            <select id="meal-plan" onchange="toggleCustomDates()">
+                                <option value="WEEKLY">WEEKLY</option>
+                                <option value="MONTHLY">MONTHLY</option>
+                                <option value="BI-WEEKLY">BI-WEEKLY</option>
+                                <option value="CUSTOM">CUSTOM</option>
+                            </select>
+                            <div id="custom-dates">
+                                <label for="start-date">Start Date:</label>
+                                <input type="date" id="start-date" name="start-date">
+                                
+                                <label for="end-date">End Date:</label>
+                                <input type="date" id="end-date" name="end-date">
+                            </div>
+                            <p>Meal Quantity</p>
+                            <input id="modal-quantity" type="number" value="1" min="1">
+                            <button onclick="addToCart()">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        const mealData = {
+            organic: [
+            { name: 'avacado', imgSrc: 'img/avacado.jpg', price: 70 },
+            { name: 'papaya', imgSrc: 'img/papaya.jpg', price: 90 },
+                { name: 'peer', imgSrc: 'img/peer.jpg', price: 80 },
+                { name: 'kiwi', imgSrc: 'img/kiwi.jpg', price: 100 },
+            ]
+        };
+
+        function renderMealSections() {
+            const mealSections = document.getElementById('meal-sections');
+            for (const [category, items] of Object.entries(mealData)) {
+                const section = document.createElement('div');
+                section.className = 'section';
+                section.innerHTML = `<h2>${capitalizeFirstLetter(category)}</h2><div class="meal-items"></div>`;
+                const mealItemsContainer = section.querySelector('.meal-items');
+
+                items.forEach(item => {
+                    const mealItem = document.createElement('div');
+                    mealItem.className = 'meal-item';
+                    mealItem.innerHTML = `
+                        <img src="${item.imgSrc}" alt="${item.name}">
+                        <h3>${item.name}</h3>
+                        <p>Rs. ${item.price}</p>
+                        <button class="quick-view-btn" onclick='showQuickView("${item.name}", "${item.imgSrc}", ${item.price})'>Quick View</button>
+                    `;
+                    mealItemsContainer.appendChild(mealItem);
+                });
+
+                mealSections.appendChild(section);
+            }
+        }
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        function showQuickView(name, imgSrc, price) {
+            document.getElementById('modal-heading').innerText = name;
+            document.getElementById('modal-image').src = imgSrc;
+            document.getElementById('modal-price').innerText = `Rs. ${price}`;
+            document.getElementById('quick-view-modal').style.display = 'block';
+        }
+
+        function closeQuickView() {
+            document.getElementById('quick-view-modal').style.display = 'none';
+        }
+
+        function addToCart() {
+            const itemName = document.getElementById('modal-heading').innerText;
+            const itemPrice = parseFloat(document.getElementById('modal-price').innerText.replace('Rs. ', ''));
+            const itemQuantity = parseInt(document.getElementById('modal-quantity').value);
+            const itemImage = document.getElementById('modal-image').src;
+        
+            // Retrieve existing cart items from local storage
+            let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Check if the item already exists in the cart
+            const existingItem = cartItems.find(item => item.name === itemName);
+            if (existingItem) {
+                // Update the quantity of the existing item
+                existingItem.quantity += itemQuantity;
+            } else {
+                // Add new item to the cart
+                cartItems.push({ name: itemName, price: itemPrice, quantity: itemQuantity, image: itemImage });
+            }
+        
+            // Save the updated cart back to local storage
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+        
+            updateCartUI();
+            closeQuickView();
+        }
+
+        function toggleCartPopup() {
+            const cartPopup = document.querySelector('.cart-popup');
+            cartPopup.style.display = cartPopup.style.display === 'block' ? 'none' : 'block';
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartPopupItems = document.querySelector('.cart-popup-items');
+            const cartCount = document.querySelector('.cart-count');
+            
+            cartPopupItems.innerHTML = '';
+            cartCount.innerText = cartItems.reduce((count, item) => count + item.quantity, 0);
+
+            cartItems.forEach(item => {
+                cartPopupItems.innerHTML += `
+                    <div class="cart-popup-item">
+                        <img src="${item.image}" alt="${item.name}">
+                        <span>${item.name} x ${item.quantity}</span>
+                        <span>Rs. ${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `;
+            });
+        }
+
+        function goToCart() {
+            window.location.href = 'cart.html';
+        }
+
+        function proceedToCheckout() {
+            window.location.href = 'checkout.html';
+        }
+
+        function toggleCustomDates() {
+            const mealPlan = document.getElementById('meal-plan').value;
+            document.getElementById('custom-dates').style.display = mealPlan === 'CUSTOM' ? 'block' : 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMealSections();
+            updateCartUI();
+        });
+        // Function to toggle sidebar visibility
+function toggleSidebar() {
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('overlay');
+    if (sidebar.style.width === '250px') {
+        sidebar.style.width = '0';
+        overlay.style.display = 'none';
+    } else {
+        sidebar.style.width = '250px';
+        overlay.style.display = 'block';
+    }
+}
+    </script>
+    <div id="sidebar" class="sidebar">
+        <a href="#" class="closebtn" onclick="toggleSidebar()">&times;</a>
+        <a href="#">Home</a>
+        <a href="#">Products</a>
+        <a href="#">Orders</a>
+        <a href="#">Subscriptions</a>
+        <a href="#">Account Settings</a>
+        <a href="#">Help</a>
+    </div>
+    <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
+
+    
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-container">
+            <div class="quick-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Terms and Conditions</a></li>
+                    <li><a href="#">Cancellation and Refund Policy</a></li>
+                </ul>
+            </div>
+            <div class="social-media">
+                <h3>Follow Us</h3>
+                <a href="https://www.instagram.com" class="social-icon instagram" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <a href="https://www.facebook.com" class="social-icon facebook" target="_blank" rel="noopener noreferrer">Facebook</a>
+                <!-- Add more social media links as needed -->
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2024 Our Kitchen Pvt. Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
