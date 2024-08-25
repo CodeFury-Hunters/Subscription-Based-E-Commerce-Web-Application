@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+    <!-- Header Section -->
+    <header id="header-container"></header>
+
+    <!-- Sticky Side Navbar -->
+    <div id="sidebar-container" class="sidebar"></div>
+
+    <!-- Dashboard Content -->
+    <main>
+        <section class="dashboard-header">
+            <h1>Admin Dashboard</h1>
+        </section>
+
+        <!-- Dashboard Cards -->
+        <section class="dashboard-cards">
+            <div class="card">
+                <div class="icon-container">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h2>Daily Customers</h2>
+                <p id="daily-customers">0</p>
+            </div>
+            <div class="card">
+                <div class="icon-container">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h2>Active Subscriptions</h2>
+                <p id="active-subscriptions">0</p>
+            </div>
+            <div class="card">
+                <div class="icon-container">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <h2>This Month's Profit</h2>
+                <p id="monthly-profit">$0</p>
+            </div>
+            <div class="card">
+                <div class="icon-container">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <h2>Customers Retained</h2>
+                <p id="customers-retained">0</p>
+            </div>
+        </section>
+        
+
+        <!-- Charts and Graphs -->
+        <section class="charts">
+            <div class="chart" id="profit-loss-chart">
+                <canvas id="myPieChart"></canvas>
+            </div>
+            <div class="chart" id="subscriptions-chart">
+                <canvas id="myLineChart"></canvas>
+            </div>
+        </section>
+
+        <div class="chart-container">
+            <canvas id="myLineChart"></canvas>
+          </div>
+          
+          </div>
+          
+    </main>
+
+    <!-- Footer Section -->
+    <footer id="footer-container"></footer>
+
+    <script src="dashboard.js"></script>
+    <script>
+        // Load header content
+        function loadHTML(file, elementId) {
+            fetch(file)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById(elementId).innerHTML = data;
+                })
+                .catch(error => console.error('Error loading file:', error));
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadHTML('header.html', 'header-container');
+            loadHTML('sidebar.html', 'sidebar-container');
+            loadHTML('footer.html', 'footer-container');
+        });
+    </script>
+
+</body>
+</html>
